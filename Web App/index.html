@@ -141,6 +141,8 @@ body.dclose main,body.dclose .top{transition-duration:.4s}
 .dhero{position:relative;width:100%;aspect-ratio:16/11;overflow:hidden}
 .dhero::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(70% 90% at 80% 15%,rgba(255,255,255,.24),transparent 60%),radial-gradient(60% 80% at 8% 95%,rgba(0,0,0,.38),transparent 70%);pointer-events:none}
 .dhero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:2;background:linear-gradient(180deg,transparent,#1d1043);pointer-events:none}
+.dhero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.card img{background:#140b2c}
 .dinfo{position:relative;z-index:3;margin-top:-1px;padding:20px 22px 26px;border-radius:0 0 36px 36px;background:linear-gradient(180deg,#1d1043,#130a31);border-bottom:1px solid rgba(190,150,255,.5);box-shadow:0 10px 30px rgba(139,92,255,.3)}
 .dinfo h2{font-size:27px;font-weight:700;line-height:1.15}
 .dinfo p{margin-top:6px;font-size:15px;color:var(--mut)}
@@ -1165,17 +1167,18 @@ window.dispatchEvent(new Event('gsa'));
   try{
     const snap=await get(ref(db,'games'));if(!snap.exists())return;
     const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const https=u=>typeof u==='string'&&/^https:\/\/[^\s"'<>\\]+$/i.test(u.trim())?u.trim():'';
+    const https=u=>{if(typeof u!=='string')return'';u=u.trim();if(u.startsWith('//'))u='https:'+u;else if(/^http:\/\//i.test(u))u='https://'+u.slice(7);return/^https:\/\/[^\s"'<>\\]+$/i.test(u)?u:''};
+    const pick=(v,ks)=>{for(const k of ks){const x=https(v[k]);if(x)return x}return''};
     const list=[];snap.forEach(c=>{const v=c.val();if(v&&typeof v==='object'&&v.name&&https(v.url))list.push([c.key,v])});
     if(!list.length)return;
     list.sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0));
     const fresh=[];
     list.forEach(([id,v])=>{
-      const k='u_'+id,icon=https(v.icon),bg=https(v.bg);
+      const k='u_'+id,icon=pick(v,['icon','image','img','cover','portada','logo','iconUrl','imageUrl','thumbnail']),bg=pick(v,['bg','banner','background','hero','bgUrl','bannerUrl','fondo']);
       GAMES[k]={n:esc(v.name),c:'',t:esc(v.name),pub:esc(v.pub||'Gio Store'),pf:'Android',
         d:v.createdAt?fdate(v.createdAt):'—',pl:'1 jugador',ds:esc(v.desc||''),url:https(v.url),
-        h:icon?'<img src="'+esc(icon)+'" alt="" loading="lazy">':'',
-        hd:(bg||icon)?'<img src="'+esc(bg||icon)+'" alt="">':''};
+        h:icon?'<img src="'+esc(icon)+'" alt="'+esc(v.name)+'" referrerpolicy="no-referrer" decoding="async" onerror="this.parentNode.insertAdjacentHTML(\'beforeend\',\'<span class=gt>\'+this.alt+\'</span>\');this.remove()">':'',
+        hd:(bg||icon)?'<img src="'+esc(bg||icon)+'" alt="" referrerpolicy="no-referrer" onerror="this.remove()">':''};
       fresh.push(k);
     });
     /* Buscador: agrega las filas nuevas */
