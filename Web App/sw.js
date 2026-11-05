@@ -1,6 +1,6 @@
 // Service worker de GioStore: funciona sin conexión y se actualiza solo.
 // Cuando cambies archivos, sube también este y sube el número de VERSION.
-const VERSION = 'giostore-v1';
+const VERSION = 'giostore-v2';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
