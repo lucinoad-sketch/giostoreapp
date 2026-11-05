@@ -487,7 +487,7 @@ a.au-lk{display:block}
 .ob-sl.on .gB{animation:obpick 3.4s ease-in-out infinite}
 @keyframes obpick{0%,50%{transform:none;box-shadow:none}58%{transform:scale(.9)}70%{transform:scale(1.08);box-shadow:0 0 18px rgba(47,212,255,.9)}85%,100%{transform:none;box-shadow:none}}
 .dlA{gap:6px}
-.p2{width:78px;height:146px;border:2px solid #c9b0ff;border-radius:18px;background:#140b2c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;box-shadow:0 0 22px rgba(180,130,255,.55),inset 0 0 10px rgba(180,130,255,.3)}
+.obp{width:78px;height:146px;border:2px solid #c9b0ff;border-radius:18px;background:#140b2c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;box-shadow:0 0 22px rgba(180,130,255,.55),inset 0 0 10px rgba(180,130,255,.3)}
 .pb{width:32px;height:38px;color:#fff;--g:#140b2c}
 .pdl{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--grad);font-size:13px}
 .ob-sl.on .pdl{animation:obpl 1.8s ease-in-out infinite}
@@ -529,6 +529,13 @@ button.mr{width:100%;border:0;background:none;text-align:left;font:inherit;color
 button.mr:active{background:rgba(47,107,255,.22)}
 .paused *,.paused *::before,.paused *::after{animation-play-state:paused!important}
 .card{contain:layout style}
+.lempty{grid-column:1/-1;text-align:center;padding:44px 18px 10px;animation:mfade .6s ease backwards}
+.lei{width:84px;height:84px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:radial-gradient(circle,rgba(139,92,255,.3),transparent 70%)}
+.lei i{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lempty h3{font-size:20px;font-weight:700}
+.lempty p{margin:8px auto 0;max-width:280px;font-size:15px;line-height:1.5;color:var(--mut)}
+.lgo{margin-top:20px;height:48px;padding:0 28px;border:0;border-radius:999px;background:var(--grad);color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(139,92,255,.45),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .25s cubic-bezier(.3,1.5,.5,1)}
+.lgo:active{transform:scale(.96)}
 </style>
 </head>
 <body>
@@ -629,19 +636,44 @@ const info=[null,null,null,null,null];
 const vs=[];vs[1]=document.getElementById('home');
 info.forEach((x,i)=>{if(!x)return;const v=document.createElement('section');v.className='view';v.hidden=true;v.innerHTML='<div class="soon"><div class="ic"><i class="fa-solid '+x[0]+'"></i></div><h2>'+x[1]+'</h2><p>'+x[2]+'</p><span class="chip">Próximamente</span></div>';views.append(v);vs[i]=v});
 /* Biblioteca (pestaña Apps) */
-const GAMES={
- shadow:{n:'Shadow of the Colossus',c:'p1',t:'Shadow of the Colossus',pub:'Sony Interactive Entertainment',pf:'PS4',d:'06/02/2018',pl:'1 jugador',ds:'Un joven viaja a una tierra prohibida para derribar a dieciséis colosos y devolver la vida a una joven. Recorre paisajes inmensos a lomos de Agro en una aventura de belleza y silencio inolvidables.'},
- uncharted:{n:'Uncharted: El Legado Perdido',c:'p2',t:'Uncharted',pub:'Sony Interactive Entertainment',pf:'PS4',d:'22/08/2017',pl:'1 jugador',ds:'Chloe Frazer y Nadine Ross se unen en la India para encontrar el Colmillo de Ganesha. Una aventura cinematográfica con exploración, acertijos y acción espectacular.'},
- dreams:{n:'Dreams',c:'p3',t:'Dreams',pub:'Sony Interactive Entertainment',pf:'PS4',d:'14/02/2020',pl:'1 jugador',ds:'Crea, comparte y juega. Esculpe mundos, compón música y diseña tus propios juegos, o disfruta de miles de creaciones hechas por la comunidad.'},
- genie:{n:'Concrete Genie',c:'p4',t:'Concrete Genie',pub:'Sony Interactive Entertainment',pf:'PS4',d:'08/10/2019',pl:'1 jugador',ds:'Ash, un chico tímido con un cuaderno de dibujo mágico, da vida a sus pinturas para devolver el color a la ciudad de Denska y hacer frente a quienes la oscurecen.'},
- horizon:{n:'Horizon Zero Dawn',c:'p5',t:'Horizon Zero Dawn',pub:'Sony Interactive Entertainment',pf:'PS4',d:'28/02/2017',pl:'1 jugador',ds:'Aloy, una cazadora marginada, recorre un mundo posapocalíptico dominado por máquinas colosales para descubrir su origen y el destino de la humanidad.'},
- ratchet:{n:'Ratchet & Clank',c:'p6',t:'Ratchet & Clank',pub:'Sony Interactive Entertainment',pf:'PS4',d:'12/04/2016',pl:'1 jugador',ds:'Ratchet y Clank se unen a los Rangers Galácticos para detener los planes del malvado Drek. Plataformas, armas disparatadas y gráficos dignos de una película animada.'},
- wipeout:{n:'wipEout Omega Collection',c:'wipe',h:'<div class="wp"><b>wipEout</b><small>OMEGA COLLECTION</small></div>',pub:'Sony Interactive Entertainment',pf:'PS4',d:'06/06/2017',pl:'1 jugador',ds:'Reúne WipEout HD, HD Fury y 2048: carreras antigravedad a velocidades vertiginosas, con naves, armas y circuitos futuristas al ritmo de música electrónica.'},
- journey:{n:'Journey',c:'gold',h:'<div class="sun"></div><div class="dune"></div>',pub:'Sony Interactive Entertainment',pf:'PS4',d:'21/07/2015',pl:'1 jugador',ds:'Viaja como una figura envuelta en una túnica por un vasto desierto hacia una montaña lejana. Una experiencia emotiva y sin palabras, donde otros viajeros pueden cruzarse en tu camino.'}
-};
-const LISTS={played:['horizon','uncharted','ratchet','genie','shadow','dreams'],bought:['shadow','uncharted','dreams','genie','horizon','ratchet','wipeout','journey']};
+const GAMES={};
+/* Biblioteca real de cada cuenta: b = fecha de compra, d = fecha de última descarga */
+let LIB={},LIBU='',lsig='';
+const libKey=()=>'gs-lib-'+LIBU;
+const libLocal=()=>{try{return JSON.parse(LSg(libKey())||'{}')||{}}catch(e){return {}}};
+const LISTS={
+ get bought(){return Object.keys(LIB).filter(k=>GAMES[k]&&LIB[k].b).sort((a,b)=>LIB[b].b-LIB[a].b)},
+ get down(){return Object.keys(LIB).filter(k=>GAMES[k]&&LIB[k].d).sort((a,b)=>LIB[b].d-LIB[a].d)}};
+const libSig=()=>LISTS.bought.join()+'|'+LISTS.down.join();
+const owned=k=>!!(LIB[k]&&LIB[k].b);
+const fdate=t=>new Date(t).toLocaleDateString('es',{day:'2-digit',month:'2-digit',year:'numeric'});
+function libMark(k,f){
+  if(!LIBU||!GAMES[k])return;
+  const now=Date.now();LIB[k]=LIB[k]||{b:0,d:0};
+  if(f==='d'&&!LIB[k].b)LIB[k].b=now;
+  LIB[k][f]=now;
+  LSs(libKey(),JSON.stringify(LIB));
+  if(window.GSA)GSA.setLib(k,{b:LIB[k].b||0,d:LIB[k].d||0}).catch(e=>console.warn('Biblioteca:',e&&e.code||e));
+}
+function paintLibViews(){const sg=libSig();if(sg===lsig)return;lsig=sg;if(cur===3)libShow();if(mopen)menuLib()}
+async function libLoad(u){
+  LIBU=u.uid;LIB=libLocal();paintLibViews();
+  if(!window.GSA)return;
+  try{
+    const r=(await GSA.lib())||{},keys=new Set([...Object.keys(LIB),...Object.keys(r)]),out={},push=[];
+    keys.forEach(k=>{if(!GAMES[k])return;
+      const a=LIB[k]||{},c=r[k]||{},m=(x,y)=>x&&y?Math.min(x,y):(x||y||0);
+      const n={b:m(a.b,c.b),d:Math.max(a.d||0,c.d||0)};out[k]=n;
+      if(n.b!==(c.b||0)||n.d!==(c.d||0))push.push([k,n])});
+    if(LIBU!==u.uid)return;
+    LIB=out;LSs(libKey(),JSON.stringify(LIB));paintLibViews();
+    push.forEach(([k,n])=>GSA.setLib(k,n).catch(()=>{}));
+  }catch(e){console.warn('Biblioteca:',e&&e.code||e)}
+}
+const emptyHTML=k=>'<div class="lempty"><div class="lei"><i class="fa-solid '+(k==='down'?'fa-cloud-arrow-down':'fa-bag-shopping')+'"></i></div><h3>'+(k==='down'?'Aún no has descargado juegos':'Aún no has comprado juegos')+'</h3><p>'+(k==='down'?'Los juegos que descargues se guardarán en tu cuenta.':'Los juegos que obtengas se guardarán en tu cuenta.')+'</p><button class="lgo">Ir a la tienda</button></div>';
+const cardsHTML=L=>L.map((k,n)=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" data-k="'+k+'" style="--n:'+n+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'}).join('');
 const lv=document.createElement('section');lv.className='view';lv.hidden=true;
-lv.innerHTML='<div class="lib"><div class="seg" role="tablist"><i class="pill"></i><button role="tab" data-k="played">Jugados</button><button role="tab" data-k="bought">Comprados</button></div><div class="lgrid"></div></div>';
+lv.innerHTML='<div class="lib"><div class="seg" role="tablist"><i class="pill"></i><button role="tab" data-k="down">Descargados</button><button role="tab" data-k="bought">Comprados</button></div><div class="lgrid"></div></div>';
 views.append(lv);vs[3]=lv;
 let lk='bought',pin=false;
 const seg=lv.querySelector('.seg'),pill=seg.querySelector('.pill'),lgrid=lv.querySelector('.lgrid'),sbtn=[...seg.querySelectorAll('button')];
@@ -650,7 +682,8 @@ function pillPos(){const b=sbtn.find(x=>x.dataset.k===lk);if(!b||!b.offsetWidth)
   pill.style.width=b.offsetWidth+'px';pill.style.transform='translateX('+b.offsetLeft+'px)';
   if(pill.style.transition==='none'){void pill.offsetWidth;pill.style.transition=''}}
 function libShow(){
-  lgrid.innerHTML=LISTS[lk].map((k,n)=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" data-k="'+k+'" style="--n:'+n+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'}).join('');
+  const L=LISTS[lk];lsig=libSig();
+  lgrid.innerHTML=L.length?cardsHTML(L):emptyHTML(lk);
   sbtn.forEach(b=>{const on=b.dataset.k===lk;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
   requestAnimationFrame(pillPos);
 }
@@ -673,15 +706,29 @@ function slide(sg,b,first){const p=sg.querySelector('.pill');if(!b||!b.offsetWid
   p.style.width=b.offsetWidth+'px';p.style.transform='translateX('+b.offsetLeft+'px)';
   if(first){void p.offsetWidth;p.style.transition=''}}
 let cvT=0;function cover(on){clearTimeout(cvT);if(on)cvT=setTimeout(()=>document.body.classList.add('cover'),650);else document.body.classList.remove('cover')}
+function dlInner(k){
+  if(!owned(k))return '<div class="dlw"><button class="dlbtn get"><span class="lab"><i class="fa-solid fa-bag-shopping"></i><span class="l">Obtener gratis</span></span></button><i class="pulse"></i></div><p class="st">Obtén el juego para guardarlo en tu cuenta y poder descargarlo.</p>';
+  const d=LIB[k].d;
+  return '<div class="dlw"><button class="dlbtn"><span class="fill"></span><span class="lab"><i class="ck">'+SV.check+'</i><span class="l">Descargar al dispositivo</span><em class="pc"></em></span></button><i class="pulse"></i></div><p class="st">Dispositivo vinculado: <b>Conectado</b>'+(d?'<br>Última descarga: '+fdate(d):'')+'</p>';
+}
+let cg='';
+function getGame(btn){
+  if(btn.dataset.s)return;btn.dataset.s='1';
+  const k=cg,w=btn.parentNode;libMark(k,'b');
+  btn.classList.add('ok');w.classList.add('go');swap(btn.querySelector('.l'),'Añadido a tu cuenta');
+  const ps=dsc.querySelector('.pst');if(ps)ps.textContent='Comprado | Lanzado '+GAMES[k].d;
+  if(navigator.vibrate)navigator.vibrate([12,50,12]);toast('Añadido a Comprados');
+  setTimeout(()=>{if(cg!==k)return;const box=dsc.querySelector('.dl');if(!box)return;box.innerHTML=dlInner(k);box.style.animation='none';void box.offsetWidth;box.style.animation='mfade .55s ease'},900);
+}
 function openDet(k){
-  const g=GAMES[k];if(!g)return;clearTimeout(ht);
+  const g=GAMES[k];if(!g)return;clearTimeout(ht);cg=k;
   dsc.innerHTML=
-   '<div class="dhero '+(g.c||'')+'">'+(g.h||'')+'</div>'+
+   '<div class="dhero '+(g.c||'')+'">'+(g.hd||g.h||'')+'</div>'+
    '<div class="dinfo"><h2>'+g.n+'</h2><p>'+g.pub+'</p>'+
      '<div class="seg dseg" role="tablist"><i class="pill"></i><button class="on" role="tab" data-p="about">Acerca de</button><button role="tab" data-p="addons">Complementos</button></div></div>'+
    '<div class="dpane" data-p="about">'+
-     '<button class="plat"><span><b>Versiones Lanzadas</b><small>Comprado | Lanzado '+g.d+'</small></span>'+SV.chev+'</button>'+
-     '<div class="dl"><div class="dlw"><button class="dlbtn"><span class="fill"></span><span class="lab"><i class="ck">'+SV.check+'</i><span class="l">Descargar al dispositivo</span><em class="pc"></em></span></button><i class="pulse"></i></div><p class="st">Dispositivo vinculado: <b>Conectado</b></p></div>'+
+     '<button class="plat"><span><b>Versiones Lanzadas</b><small class="pst">'+(owned(k)?'Comprado':'Sin comprar')+' | Lanzado '+g.d+'</small></span>'+SV.chev+'</button>'+
+     '<div class="dl">'+dlInner(k)+'</div>'+
      '<div class="np">'+SV.user+'<span>'+g.pl+'</span></div>'+
      '<div class="gd"><h4>Descripción</h4><p>'+g.ds+'</p></div></div>'+
    '<div class="dpane" data-p="addons" hidden><div class="soon"><div class="ic"><svg viewBox="0 0 24 24" fill="url(#brand)"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-2 .9-2 2v3.8h1.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg></div><h2>Próximamente</h2><p>Los complementos de este juego llegarán muy pronto.</p><span class="chip">Muy pronto</span></div></div>';
@@ -697,13 +744,14 @@ function closeDet(pop){
   if(det.hidden||det.classList.contains('out'))return;
   det.classList.remove('in');det.classList.add('out');if(!mopen)cover(false);
   document.body.classList.add('dclose');document.body.classList.remove('dopen');
-  ht=setTimeout(()=>{det.hidden=true;det.classList.remove('out');document.body.classList.remove('dclose')},410);
+  ht=setTimeout(()=>{det.hidden=true;det.classList.remove('out');document.body.classList.remove('dclose');paintLibViews()},410);
   if(navigator.vibrate)navigator.vibrate(8);
   if(!pop&&history.state&&history.state.d){try{history.back()}catch(e){}}
 }
 function swap(el,html){el.innerHTML=html;el.classList.remove('sw');void el.offsetWidth;el.classList.add('sw')}
 function runDl(d){
-  if(d.dataset.s)return;d.dataset.s='1';
+  if(d.dataset.s)return;d.dataset.s='1';const gk=cg;
+  {const u=GAMES[gk]&&GAMES[gk].url;if(u){const a=document.createElement('a');a.href=u;a.rel='noopener';a.target='_blank';a.download='';document.body.append(a);a.click();a.remove()}}
   const w=d.parentNode,l=d.querySelector('.l'),pc=d.querySelector('.pc');
   d.classList.add('run');d.style.setProperty('--p',0);pc.textContent='0%';
   swap(l,'Conectando…');
@@ -715,18 +763,19 @@ function runDl(d){
     if(!ph&&p>.1){ph=1;swap(l,'Descargando')}
     if(t<1)return requestAnimationFrame(tick);
     d.classList.remove('run');d.classList.add('ok');w.classList.add('go');
-    swap(l,'Listo en tu dispositivo');
+    swap(l,'Listo en tu dispositivo');libMark(gk,'d');const stp=d.closest('.dl'),stl=stp&&stp.querySelector('.st');if(stl)stl.innerHTML='Dispositivo vinculado: <b>Conectado</b><br>Última descarga: '+fdate(Date.now());
     if(navigator.vibrate)navigator.vibrate([12,50,12]);
     setTimeout(()=>{d.classList.remove('ok');w.classList.remove('go');swap(l,'Descargar al dispositivo');delete d.dataset.s},3400);
   })(t0);
 }
-lgrid.addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openDet(c.dataset.k)});
+lgrid.addEventListener('click',e=>{if(e.target.closest('.lgo'))return go(2);const c=e.target.closest('.card');if(c)openDet(c.dataset.k)});
 dsc.addEventListener('click',e=>{
   const t=e.target.closest('.seg button');
   if(t){if(t.classList.contains('on'))return;const sg=t.parentNode;
     sg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));slide(sg,t);
     dsc.querySelectorAll('.dpane').forEach(p=>{p.hidden=p.dataset.p!==t.dataset.p});
     if(navigator.vibrate)navigator.vibrate(8);return}
+  const gb=e.target.closest('.dlbtn.get');if(gb)return getGame(gb);
   const d=e.target.closest('.dlbtn');if(d)runDl(d);
 });
 det.querySelector('.dback').addEventListener('click',()=>closeDet());
@@ -763,9 +812,9 @@ xv.innerHTML='<div class="ex"><div class="exh"><svg class="sbag"><use href="#bag
 views.append(xv);vs[2]=xv;
 let ek=0;const exb=xv.querySelector('.exb'),chips=xv.querySelector('.chips'),cb=[...chips.querySelectorAll('button')];
 function exShow(){
-  const T=EX[ek];
-  exb.innerHTML='<div class="sart '+T.a+'">'+ART+'<span class="aw">'+T.w+'</span></div><h2 class="sh">'+T.h+'</h2><p class="sd">'+T.d+'</p><button class="cta" data-g="'+T.g+'">'+T.b+'</button><h3 class="rt">'+T.r+'</h3><div class="rail">'+
-    T.l.map((k,n)=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" data-k="'+k+'" style="--n:'+n+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'}).join('')+'</div>';
+  const T=EX[ek],ks=Object.keys(GAMES),mk=k=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" data-k="'+k+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'};
+  exb.innerHTML='<div class="sart '+T.a+'">'+ART+'<span class="aw">'+T.w+'</span></div><h2 class="sh">'+T.h+'</h2><p class="sd">'+T.d+'</p>'+
+    (ks.length?'<button class="cta" data-g="'+ks[0]+'">'+T.b+'</button><h3 class="rt">'+T.r+'</h3><div class="rail">'+ks.map(mk).join('')+'</div>':'<span style="display:inline-block;margin:0 6px;padding:7px 16px;border-radius:999px;font-size:13px;font-weight:600;color:#e6d8ff;background:rgba(139,92,255,.2);border:1px solid rgba(180,140,255,.4)">Muy pronto</span>');
   cb.forEach((b,i)=>{b.classList.toggle('on',i===ek);b.setAttribute('aria-selected',i===ek)});
   requestAnimationFrame(()=>slide(chips,cb[ek],!chips.dataset.i));chips.dataset.i='1';
 }
@@ -778,7 +827,8 @@ views.append(gv);vs[0]=gv;
 const glist=gv.querySelector('.lgrid'),gcount=gv.querySelector('.gh p');
 function gmShow(){
   const ks=Object.keys(GAMES);
-  gcount.textContent=ks.length+' juegos disponibles';
+  gcount.textContent=ks.length?ks.length+' juegos disponibles':'Muy pronto';
+  if(!ks.length){glist.innerHTML='<div class="lempty"><div class="lei"><i class="fa-solid fa-gamepad"></i></div><h3>Muy pronto</h3><p>Estamos preparando el catálogo de juegos.</p></div>';return}
   glist.innerHTML=ks.map((k,n)=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" data-k="'+k+'" style="--n:'+n+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'}).join('');
 }
 glist.addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openDet(c.dataset.k)});
@@ -789,9 +839,10 @@ sv.innerHTML='<div class="sv"><div class="sbar">'+SMAG+'<input id="q" type="sear
 views.append(sv);vs[4]=sv;
 const qi=sv.querySelector('#q'),sbar=sv.querySelector('.sbar'),sres=sv.querySelector('.sres'),sclr=sv.querySelector('.sclr');
 const norm=t=>t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-const KS=Object.keys(GAMES),TR=['dreams','horizon','journey','wipeout'];
+const KS=Object.keys(GAMES);
 const srow=(k,n,h)=>{const g=GAMES[k];return '<button class="sr"'+(h?' hidden data-v="0"':'')+' data-k="'+k+'" style="--n:'+n+'"><div class="card '+(g.c||'')+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</div><span class="srt"><b>'+g.n+'</b><small>'+g.pub+'</small></span>'+SV.chev+'</button>'};
-sres.innerHTML='<div class="sidle"><h3 class="sst">Búsquedas populares</h3><div class="stg">'+['horizon','dreams','journey','ratchet','uncharted','genie'].map((k,i)=>'<button style="--n:'+i+'" data-t="'+GAMES[k].t+'">'+GAMES[k].t+'</button>').join('')+'</div><h3 class="sst">Tendencias</h3>'+TR.map((k,i)=>srow(k,i)).join('')+'</div>'+
+const idleHTML=()=>{const ks=Object.keys(GAMES);return ks.length?'<h3 class="sst">Búsquedas populares</h3><div class="stg">'+ks.slice(0,6).map((k,i)=>'<button style="--n:'+i+'" data-t="'+GAMES[k].t+'">'+GAMES[k].t+'</button>').join('')+'</div><h3 class="sst">Tendencias</h3>'+ks.slice(0,4).map((k,i)=>srow(k,i)).join(''):'<div class="soon" style="padding:54px 20px"><div class="ic"><i class="fa-solid fa-magnifying-glass"></i></div><h2>Muy pronto</h2><p>Aún no hay juegos en la tienda.</p></div>'};
+sres.innerHTML='<div class="sidle">'+idleHTML()+'</div>'+
  '<div class="sfound" hidden><p class="srn"></p><div class="sl">'+KS.map(k=>srow(k,0,1)).join('')+'</div><div class="soon snone" hidden><div class="ic"><i class="fa-solid fa-magnifying-glass"></i></div><h2>Sin resultados</h2><p></p></div></div>';
 const sidle=sres.querySelector('.sidle'),sfound=sres.querySelector('.sfound'),srn=sres.querySelector('.srn'),snone=sres.querySelector('.snone'),snp=snone.querySelector('p'),srows=[...sfound.querySelectorAll('.sr')];
 let smode='i';
@@ -839,8 +890,8 @@ const menu=document.createElement('div');menu.className='menu';menu.setAttribute
 menu.innerHTML='<section class="mpanel" role="dialog" aria-label="Mi cuenta">'+
  '<div class="mhero"><div class="mnav"><button class="mx" aria-label="Volver"><i class="fa-solid fa-chevron-left"></i></button><h2>Mi cuenta</h2><span class="sp"></span></div>'+
  '<div class="macc"><div class="avw"><div class="avr"><div class="av2"></div></div><span class="onl"></span></div><div class="nm"><b id="un"></b><input id="uni" maxlength="18" hidden autocomplete="off" spellcheck="false" aria-label="Nombre"><button class="pen" aria-label="Editar nombre"><i class="fa-solid fa-pen"></i></button></div><div class="em"></div><span class="mbadge"><i></i>En línea</span></div></div>'+
- '<div class="mstats"><div><b id="s-b">0</b><span>Comprados</span></div><div><b id="s-p">0</b><span>Jugados</span></div><div><b id="s-t">0</b><span>En la tienda</span></div></div>'+
- '<div class="mlib"><h3 class="mt">Mis juegos</h3><div class="seg" role="tablist"><i class="pill"></i><button role="tab" data-k="bought">Comprados</button><button role="tab" data-k="played">Jugados</button></div><div class="lgrid"></div></div>'+
+ '<div class="mstats"><div><b id="s-b">0</b><span>Comprados</span></div><div><b id="s-p">0</b><span>Descargados</span></div><div><b id="s-t">0</b><span>En la tienda</span></div></div>'+
+ '<div class="mlib"><h3 class="mt">Mis juegos</h3><div class="seg" role="tablist"><i class="pill"></i><button role="tab" data-k="bought">Comprados</button><button role="tab" data-k="down">Descargados</button></div><div class="lgrid"></div></div>'+
  '<div class="mlist"><button class="mr" data-a="guide"><span class="mi2"><i class="fa-solid fa-compass"></i></span><span class="t"><b>Guía de uso</b><small>Aprende a usar y descargar juegos</small></span><i class="fa-solid fa-chevron-right"></i></button><a class="mr" href="https://giostoredigital.onrender.com" target="_blank" rel="noopener"><span class="mi2"><i class="fa-solid fa-circle-question"></i></span><span class="t"><b>Ayuda</b><small>Abre la web de soporte de GioStore</small></span><i class="fa-solid fa-arrow-up-right-from-square"></i></a>'+
  '<div class="mr"><span class="mi2"><i class="fa-solid fa-gamepad"></i></span><span class="t"><b>Dispositivo vinculado</b><small>Conectado</small></span><span class="ok"></span></div></div>'+
  '<div class="mfoot"><button class="mlo"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sesión</button><div class="mver">GioStore 2.0</div></div></section>';
@@ -855,9 +906,10 @@ const refreshRows=()=>menu.querySelectorAll('.mrow[role=switch]').forEach(r=>r.s
 let mk='bought';
 const mlib=menu.querySelector('.mlib'),mseg=mlib.querySelector('.seg'),mgrid=mlib.querySelector('.lgrid'),mbtn=[...mseg.querySelectorAll('button')];
 function menuLib(first){
-  mgrid.innerHTML=LISTS[mk].map((k,n)=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" data-k="'+k+'" style="--n:'+n+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'}).join('');
+  const L=LISTS[mk];lsig=libSig();
+  mgrid.innerHTML=L.length?cardsHTML(L):emptyHTML(mk);
   mbtn.forEach(b=>{const on=b.dataset.k===mk;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
-  menu.querySelector('#s-b').textContent=LISTS.bought.length;menu.querySelector('#s-p').textContent=LISTS.played.length;menu.querySelector('#s-t').textContent=Object.keys(GAMES).length;
+  menu.querySelector('#s-b').textContent=LISTS.bought.length;menu.querySelector('#s-p').textContent=LISTS.down.length;menu.querySelector('#s-t').textContent=Object.keys(GAMES).length;
   requestAnimationFrame(()=>slide(mseg,mbtn.find(b=>b.dataset.k===mk),first));
 }
 function editName(){uni.value=uname;un.hidden=true;pen.hidden=true;uni.hidden=false;uni.focus();uni.select()}
@@ -892,6 +944,7 @@ async function rowAct(a){
 }
 menu.addEventListener('click',e=>{
   if(e.target.closest('[data-a=guide]'))return obOpen(true);
+  if(e.target.closest('.lgo')){closeMenu();go(2);return}
   if(e.target.closest('.mx'))return closeMenu();
   if(e.target.closest('.pen,#un'))return editName();
   if(e.target.closest('.mlo'))return dlg.classList.add('open');
@@ -921,9 +974,9 @@ const OBS=[
   a:'<div class="ob-art"><div class="mnv"><div class="mni"><i class="fa-solid fa-gamepad"></i><small>Juegos</small></div><div class="mni" style="animation-delay:1.2s"><i class="fa-solid fa-rocket"></i><small>Novedades</small></div><div class="mni" style="animation-delay:2.4s"><i class="fa-solid fa-bag-shopping"></i><small>Explorar</small></div><div class="mni" style="animation-delay:3.6s"><i class="fa-solid fa-table-cells-large"></i><small>Apps</small></div><div class="mni" style="animation-delay:4.8s"><i class="fa-solid fa-magnifying-glass"></i><small>Buscar</small></div><div class="mnt"><b></b></div></div></div>'},
  {h:'Encuentra tu próximo juego',p:'Busca por nombre o explora la tienda. Toca una portada para ver toda su información.',
   a:'<div class="ob-art"><div class="phn"><div class="phs"><i class="fa-solid fa-magnifying-glass"></i>Buscar juegos</div><div class="phg"><b class="gA"></b><b class="gB"></b><b class="gC"></b><b class="gD"></b></div><span class="tp"></span></div></div>'},
- {h:'Descarga a tu dispositivo',p:'Dentro del juego toca “Descargar al dispositivo”. Verás el progreso hasta que diga “Listo en tu dispositivo”.',
-  a:'<div class="ob-art dlA"><div class="p2"><svg class="pb"><use href="#bag"/></svg><span class="pdl"><i class="fa-solid fa-arrow-down"></i></span></div><div class="arw"><i></i><i></i><i></i></div><div class="dev"><div class="dscr"><span class="dbar"><b></b></span><span class="dck"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5L19.5 7"/></svg></span></div><span class="dst"></span></div></div>'},
- {h:'Tu cuenta y tus juegos',p:'En Explorar toca el menú ☰ para abrir Mi cuenta: tus juegos comprados y jugados, la guía, Ayuda y Cerrar sesión.',
+ {h:'Descarga a tu dispositivo',p:'Dentro del juego toca “Obtener gratis” para guardarlo en tu cuenta y luego “Descargar al dispositivo”. Se registra en tus Descargados.',
+  a:'<div class="ob-art dlA"><div class="obp"><svg class="pb"><use href="#bag"/></svg><span class="pdl"><i class="fa-solid fa-arrow-down"></i></span></div><div class="arw"><i></i><i></i><i></i></div><div class="dev"><div class="dscr"><span class="dbar"><b></b></span><span class="dck"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5L19.5 7"/></svg></span></div><span class="dst"></span></div></div>'},
+ {h:'Tu cuenta y tus juegos',p:'En Explorar toca el menú ☰ para abrir Mi cuenta: tus juegos comprados y descargados, la guía, Ayuda y Cerrar sesión.',
   a:'<div class="ob-art" style="flex-direction:column"><div class="acr"><span class="avr2"><span class="avi">G</span></span><span class="onl2"></span></div><div class="fan"><b class="f1"></b><b class="f2"></b><b class="f3"></b></div></div>'}
 ];
 const ob=document.createElement('div');ob.className='ob';ob.setAttribute('role','dialog');ob.setAttribute('aria-label','Guía de GioStore');
@@ -990,8 +1043,8 @@ setTimeout(()=>{btnReady=true;settle()},1500);
 setTimeout(()=>{if(!authReady){authReady=true;settle()}},6500);
 function onAuth(u){
   authReady=true;curUser=u;
-  if(u){uname=u.name||(u.email||'Usuario').split('@')[0];paintUser();paintEmail(u.email)}
-  else if(inApp){inApp=false;clearTimeout(hideT);hideT=0;closeAuthAll();wl.classList.remove('out');void wl.offsetWidth;wlb.classList.add('show');setTimeout(()=>{closeDet();closeMenu();go(1);uname='Usuario';paintUser();paintEmail('')},760)}
+  if(u){uname=u.name||(u.email||'Usuario').split('@')[0];paintUser();paintEmail(u.email);if(u.uid!==LIBU)libLoad(u)}
+  else if(inApp){inApp=false;clearTimeout(hideT);hideT=0;closeAuthAll();wl.classList.remove('out');void wl.offsetWidth;wlb.classList.add('show');setTimeout(()=>{LIB={};LIBU='';lsig='';closeDet();closeMenu();go(1);uname='Usuario';paintUser();paintEmail('')},760)}
   settle();
 }
 function bindFB(){if(window.GSA&&!bound){bound=true;GSA.onUser(onAuth)}}
@@ -1100,10 +1153,42 @@ window.GSA={
     try{const c=await signInWithPopup(auth,p);save(c.user);return simple(c.user)}
     catch(e){if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment','auth/web-storage-unsupported'].includes(e.code)){await signInWithRedirect(auth,p);return null}throw e}},
   reset(email){return sendPasswordResetEmail(auth,email)},
+  async lib(){const u=auth.currentUser;if(!u)return null;const s=await get(ref(db,'users/'+u.uid+'/library'));return s.exists()?s.val():{}},
+  setLib(k,v){const u=auth.currentUser;if(!u)return Promise.reject(new Error('no-user'));return update(ref(db,'users/'+u.uid+'/library/'+k),v)},
   logout(){return signOut(auth)},
   async rename(name){const u=auth.currentUser;if(!u)return;await updateProfile(u,{displayName:name});try{await update(ref(db,'users/'+u.uid),{name})}catch(e){}emit()}
 };
 window.dispatchEvent(new Event('gsa'));
+
+/* Juegos publicados por desarrolladores (panel developerpublish): se leen de Realtime Database /games */
+(async function(){
+  try{
+    const snap=await get(ref(db,'games'));if(!snap.exists())return;
+    const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const https=u=>typeof u==='string'&&/^https:\/\/[^\s"'<>\\]+$/i.test(u.trim())?u.trim():'';
+    const list=[];snap.forEach(c=>{const v=c.val();if(v&&typeof v==='object'&&v.name&&https(v.url))list.push([c.key,v])});
+    if(!list.length)return;
+    list.sort((a,b)=>(b[1].createdAt||0)-(a[1].createdAt||0));
+    const fresh=[];
+    list.forEach(([id,v])=>{
+      const k='u_'+id,icon=https(v.icon),bg=https(v.bg);
+      GAMES[k]={n:esc(v.name),c:'',t:esc(v.name),pub:esc(v.pub||'Gio Store'),pf:'Android',
+        d:v.createdAt?fdate(v.createdAt):'—',pl:'1 jugador',ds:esc(v.desc||''),url:https(v.url),
+        h:icon?'<img src="'+esc(icon)+'" alt="" loading="lazy">':'',
+        hd:(bg||icon)?'<img src="'+esc(bg||icon)+'" alt="">':''};
+      fresh.push(k);
+    });
+    /* Buscador: agrega las filas nuevas */
+    try{
+      const sl=snone.parentNode;
+      fresh.forEach(k=>snone.insertAdjacentHTML('beforebegin',srow(k,0,1)));
+      fresh.forEach(k=>{const r=sl.querySelector('.sr[data-k="'+k+'"]');if(r)srows.push(r)});
+    }catch(e){}
+    try{sidle.innerHTML=idleHTML()}catch(e){}
+    try{lsig='';paintLibViews()}catch(e){}
+    if(typeof cur!=='undefined'){if(cur===0)gmShow();if(cur===2)exShow()}
+  }catch(e){console.warn('Juegos de desarrolladores:',e&&e.code||e)}
+})();
 </script>
 </body>
 </html>
