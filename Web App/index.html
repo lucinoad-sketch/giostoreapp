@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>GioStore</title>
 <meta name="theme-color" content="#07040f">
 <meta name="color-scheme" content="dark">
@@ -21,7 +21,7 @@
 :root{--blue:#8b5cff;--grad:linear-gradient(110deg,#ff3fa4,#8b5cff 50%,#2f6bff);--mut:#a89fc8}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html{background:#000;overscroll-behavior:none}
+html{background:#000;overscroll-behavior:none;touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:'Albert Sans',system-ui,sans-serif;background:#07040f;color:#fff;max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;position:relative;user-select:none;-webkit-user-select:none;overscroll-behavior-y:none;overflow-x:clip;touch-action:manipulation;-webkit-touch-callout:none;-webkit-text-size-adjust:100%;box-shadow:0 0 0 1px #1a1038}
 button{font-family:inherit}
 
@@ -190,11 +190,10 @@ tabs.forEach((t,i)=>t.addEventListener('click',()=>go(i)));
 /* Web app: service worker, pantalla completa e instalación */
 const standalone=matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches||navigator.standalone===true;
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-if(!standalone&&matchMedia('(pointer:coarse)').matches&&document.fullscreenEnabled){
-  addEventListener('pointerup',()=>{
-    document.documentElement.requestFullscreen({navigationUI:'hide'}).then(()=>{try{screen.orientation.lock('portrait').catch(()=>{})}catch(e){}}).catch(()=>{});
-  },{once:true});
-}
+/* Anti-zoom: bloquea pellizco y doble toque (iOS ignora user-scalable) */
+['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+document.addEventListener('touchmove',e=>{if(e.touches.length>1||(e.scale&&e.scale!==1))e.preventDefault()},{passive:false});
+document.addEventListener('dblclick',e=>e.preventDefault());
 let dp=null;const box=document.getElementById('install'),itxt=document.getElementById('itxt'),ibtn=document.getElementById('ibtn');
 const dismissed=()=>{try{return localStorage.getItem('gs-inst')==='1'}catch(e){return false}};
 const showInstall=()=>{if(standalone||dismissed())return;setTimeout(()=>{box.hidden=false},2500)};
