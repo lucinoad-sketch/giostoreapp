@@ -243,8 +243,15 @@ body.dclose main,body.dclose .top{transition-duration:.4s}
 .stg button:active{transform:scale(.94);background:rgba(139,92,255,.34)}
 .stg svg{width:14px;height:14px;color:var(--mut)}
 .srn{font-size:14px;color:var(--mut);margin:22px 8px 10px;font-weight:600}
-.sr{display:flex;align-items:center;gap:14px;width:100%;padding:10px;margin-bottom:4px;border:0;border-radius:16px;background:none;color:#fff;text-align:left;cursor:pointer;animation:rise .45s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--n)*.05s);transition:background .2s,transform .25s cubic-bezier(.3,1.5,.5,1)}
-.sres.t .sr{animation:none}
+.sr{max-height:120px;overflow:hidden;display:flex;align-items:center;gap:14px;width:100%;padding:10px;margin-bottom:4px;border:0;border-radius:16px;background:none;color:#fff;text-align:left;cursor:pointer;transition:background .2s,transform .25s cubic-bezier(.3,1.5,.5,1)}
+.sr.an{animation:sri .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--n)*.06s)}
+@keyframes sri{from{opacity:0;max-height:0;padding-top:0;padding-bottom:0;margin-bottom:0;transform:translateX(-18px) scale(.96)}}
+.sr.out{animation:sro .26s cubic-bezier(.4,0,.2,1) forwards;pointer-events:none}
+@keyframes sro{to{opacity:0;max-height:0;padding-top:0;padding-bottom:0;margin-bottom:0;transform:scale(.96)}}
+.sidle,.sfound{animation:rise .4s cubic-bezier(.2,.8,.2,1) backwards}
+.sidle .sr{animation:sri .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--n)*.06s)}
+.stg button{animation:sri .45s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--n)*.05s)}
+.sres .soon{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
 .sr:active{background:rgba(139,92,255,.18);transform:scale(.98)}
 .sr .card{width:74px;flex:none;animation:none;pointer-events:none;border-radius:10px}
 .sr .card .gt{font-size:10px;padding:5px}
@@ -255,24 +262,123 @@ body.dclose main,body.dclose .top{transition-duration:.4s}
 .sr>svg{width:20px;height:20px;color:var(--mut);flex:none}
 .sres .soon{padding:54px 20px}
 
-/* Juegos (lista vertical) */
-.gv{padding:0 6px}
-.gh{margin:0 6px 22px}
+/* Juegos (cuadrícula) */
+.gv{padding:0 8px}
+.gh{margin:0 2px 20px}
 .gh h2{font-size:28px;font-weight:800;letter-spacing:-.3px}
 .gh p{margin-top:5px;color:var(--mut);font-size:15px}
-.gm{position:relative;margin-bottom:24px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#1d1043,#130a31);border:1px solid rgba(190,150,255,.24);box-shadow:0 12px 30px rgba(0,0,0,.45);cursor:pointer;opacity:0;transform:translateY(34px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
-.gm.in{opacity:1;transform:none}
-.gm.in:active{transform:scale(.972);transition:transform .18s,box-shadow .18s;box-shadow:0 0 0 1px rgba(190,150,255,.65),0 0 28px rgba(139,92,255,.5)}
-.gm .dhero{aspect-ratio:16/9}
-.gm .gt{position:absolute;inset:0;z-index:3;display:grid;place-items:center;padding:22px;text-align:center;font-weight:800;font-size:clamp(24px,8vw,34px);line-height:1.1;text-shadow:0 2px 14px rgba(0,0,0,.55)}
-.gm .wp{padding-top:10%}
-.gb{position:relative;z-index:4;padding:6px 20px 20px}
-.gb h3{font-size:21px;font-weight:700;line-height:1.2}
-.gb .gp{margin-top:4px;font-size:14px;color:var(--mut)}
-.gb .gd2{margin-top:10px;font-size:15px;line-height:1.5;color:#cfc8e6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.gf{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px}
-.gf span.m{font-size:13px;color:var(--mut)}
-.gf span.gbtn{flex:none;padding:11px 22px;border-radius:999px;background:var(--grad);color:#fff;font-weight:700;font-size:14px;box-shadow:0 6px 20px rgba(139,92,255,.45),inset 0 1px 0 rgba(255,255,255,.25)}
+
+/* Mi cuenta: menú lateral, diálogo, login y avisos */
+body.mopen main,body.mopen .top{transform:scale(.95);filter:brightness(.55) saturate(.9)}
+.menu{position:fixed;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:480px;z-index:60;overflow:hidden;pointer-events:none;visibility:hidden;transition:visibility 0s .45s}
+.menu.open{pointer-events:auto;visibility:visible;transition-delay:0s}
+.mscrim{position:absolute;inset:0;background:rgba(4,2,12,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .4s ease}
+.menu.open .mscrim{opacity:1}
+.mpanel{position:absolute;top:0;bottom:0;right:0;width:min(88%,372px);display:flex;flex-direction:column;gap:14px;padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 24px);overflow-y:auto;overscroll-behavior:contain;border-radius:30px 0 0 30px;background:linear-gradient(180deg,#1d1050,#0c0620 65%);border-left:1px solid rgba(190,150,255,.45);box-shadow:-24px 0 60px rgba(0,0,0,.65);transform:translateX(105%);transition:transform .38s cubic-bezier(.5,0,.75,.2)}
+.menu.open .mpanel{transform:none;transition:transform .55s cubic-bezier(.22,1,.3,1)}
+.menu.open .mpanel>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(.1s + var(--k,0)*.045s)}
+.mh{display:flex;align-items:center;justify-content:space-between}
+.mh h2{font-size:26px;font-weight:800;letter-spacing:-.3px}
+.mx{width:42px;height:42px;border:0;border-radius:50%;display:grid;place-items:center;background:rgba(139,92,255,.22);color:#fff;font-size:18px;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.5,.5,1)}
+.mx:active{transform:scale(.85) rotate(90deg)}
+.acc{display:flex;align-items:center;gap:14px;padding:18px;border-radius:22px;background:linear-gradient(135deg,rgba(255,63,164,.2),rgba(139,92,255,.3) 55%,rgba(47,107,255,.22));border:1px solid rgba(190,150,255,.45);box-shadow:0 10px 28px rgba(139,92,255,.25)}
+.av2{flex:none;width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:var(--grad);font-size:30px;font-weight:800;box-shadow:0 0 22px rgba(139,92,255,.65)}
+.ai{flex:1;min-width:0}
+.nm{display:flex;align-items:center;gap:8px;min-height:32px}
+.nm b{font-size:21px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.nm input{width:100%;min-width:0;height:34px;padding:0 12px;border-radius:10px;border:1px solid rgba(200,160,255,.8);background:rgba(10,6,24,.7);color:#fff;font:inherit;font-size:17px;font-weight:600;outline:0;user-select:text;-webkit-user-select:text}
+.pen{flex:none;width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:12px;cursor:pointer}
+.ai small{display:block;margin-top:6px;font-size:13px;color:var(--mut)}
+.ai small.em{margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ai small b{color:#5b8cff;font-weight:700}
+.mt{margin:8px 4px 0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.mrow{display:flex;align-items:center;gap:14px;width:100%;padding:13px 14px;border-radius:18px;border:1px solid rgba(190,150,255,.22);background:rgba(20,11,44,.72);color:#fff;text-align:left;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.5,.5,1),background .25s,border-color .25s}
+.mrow:active{transform:scale(.97);background:rgba(139,92,255,.22);border-color:rgba(190,150,255,.6)}
+.mi2{flex:none;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:rgba(139,92,255,.24);font-size:16px}
+.mrow .t{flex:1;min-width:0}
+.mrow .t b{display:block;font-size:16px;font-weight:600}
+.mrow .t small{display:block;margin-top:2px;font-size:12.5px;color:var(--mut)}
+.mrow>i.fa-chevron-right{font-size:13px;color:var(--mut)}
+.swt{position:relative;flex:none;width:52px;height:31px;border-radius:999px;background:rgba(139,92,255,.2);border:1px solid rgba(190,150,255,.42);transition:background .3s,border-color .3s}
+.swt::after{content:"";position:absolute;top:3px;left:3px;width:23px;height:23px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.45);transition:transform .38s cubic-bezier(.3,1.6,.5,1)}
+.mrow[aria-checked=true] .swt{background:var(--grad);border-color:transparent;box-shadow:0 0 14px rgba(139,92,255,.55)}
+.mrow[aria-checked=true] .swt::after{transform:translateX(21px)}
+.mfoot{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding-top:10px}
+.mlo{display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:999px;border:1px solid rgba(255,90,140,.55);background:rgba(255,63,120,.12);color:#ff7aa5;font-size:16px;font-weight:700;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.5,.5,1),background .25s}
+.mlo:active{transform:scale(.96);background:rgba(255,63,120,.24)}
+.mver{text-align:center;font-size:12px;color:#6f679a}
+.dlg{position:fixed;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:480px;z-index:70;display:grid;place-items:center;padding:24px;visibility:hidden;opacity:0;transition:opacity .3s,visibility 0s .3s}
+.dlg.open{visibility:visible;opacity:1;transition-delay:0s}
+.dscrim{position:absolute;inset:0;background:rgba(4,2,12,.75)}
+.dcard{position:relative;width:min(100%,340px);padding:26px 22px 20px;border-radius:26px;text-align:center;background:linear-gradient(180deg,#1d1043,#130a31);border:1px solid rgba(190,150,255,.45);box-shadow:0 24px 70px rgba(0,0,0,.65);transform:scale(.86) translateY(12px);transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.dlg.open .dcard{transform:none}
+.dic{width:58px;height:58px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:22px;color:#ff7aa5;background:rgba(255,63,120,.15);border:1px solid rgba(255,90,140,.4)}
+.dcard h3{font-size:22px;font-weight:700}
+.dcard p{margin-top:8px;font-size:15px;line-height:1.45;color:var(--mut)}
+.dbt{display:flex;gap:10px;margin-top:22px}
+.dbt button{flex:1;height:48px;border-radius:999px;border:1px solid rgba(190,150,255,.4);background:rgba(139,92,255,.16);color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.5,.5,1)}
+.dbt button:active{transform:scale(.94)}
+.dbt .dyes{border-color:transparent;background:linear-gradient(110deg,#ff3f7a,#c2279f)}
+.toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);z-index:120;max-width:90%;padding:12px 20px;border-radius:999px;text-align:center;font-size:14px;font-weight:600;background:rgba(20,11,44,.97);border:1px solid rgba(190,150,255,.5);box-shadow:0 8px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s,transform .45s cubic-bezier(.3,1.5,.5,1)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.nofx *,.nofx *::before,.nofx *::after{animation:none!important;transition:none!important}
+.nofx .post{opacity:1;transform:none}.nofx .nav{transform:translateX(-50%)}
+
+/* Bienvenida (splash) y acceso */
+.wl{position:fixed;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:480px;z-index:100;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:9vh;background:linear-gradient(180deg,#2b1466 0%,#1a0f4d 48%,#090520 100%);transition:opacity .6s ease,transform .6s cubic-bezier(.4,0,.2,1),visibility 0s .6s}
+.wl.out{opacity:0;transform:scale(1.05);visibility:hidden;pointer-events:none}
+.wl-bg{position:absolute;inset:0;pointer-events:none}
+.wl-bg i{position:absolute;display:block}
+.wl-bg .s1{inset:0;background:radial-gradient(90% 60% at 0% 0%,rgba(255,63,164,.55),transparent 62%),radial-gradient(85% 70% at 100% 100%,rgba(47,107,255,.7),transparent 64%)}
+.wl-bg .s2{left:-25%;top:-12%;width:150%;height:72%;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,0) 62%);clip-path:polygon(0 0,100% 20%,38% 100%);animation:wlf 9s ease-in-out infinite alternate}
+.wl-bg .s3{right:-35%;bottom:-6%;width:150%;height:62%;background:linear-gradient(45deg,rgba(139,92,255,.4),rgba(255,255,255,0) 70%);clip-path:polygon(100% 0,100% 100%,0 100%);animation:wlf 11s ease-in-out -4s infinite alternate-reverse}
+@keyframes wlf{to{transform:translate(5%,3%) rotate(2deg)}}
+.wl-c{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center}
+.wl-logo{width:96px;height:112px;color:#fff;--g:#2b1466;filter:drop-shadow(0 0 22px rgba(210,160,255,.7));animation:wlpop 1s cubic-bezier(.2,.8,.2,1) both,wlglow 3s ease-in-out 1s infinite}
+@keyframes wlpop{from{opacity:0;transform:scale(.7) translateY(14px)}}
+@keyframes wlglow{50%{filter:drop-shadow(0 0 34px rgba(230,170,255,.95))}}
+.wl-t{font-size:23px;font-weight:300;letter-spacing:.3px;color:#f3ecff;animation:rise .9s cubic-bezier(.2,.8,.2,1) .5s both}
+.wl-b{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 22px calc(env(safe-area-inset-bottom) + 28px);opacity:0;transform:translateY(46px);pointer-events:none;transition:opacity .6s ease,transform .75s cubic-bezier(.2,.8,.2,1)}
+.wl-b.show{opacity:1;transform:none;pointer-events:auto}
+.wl-link{border:0;background:none;color:#fff;font-size:14px;font-weight:700;padding:6px 10px;cursor:pointer}
+.wl-btn{width:100%;height:54px;border:0;border-radius:999px;background:#fff;color:#1a0d45;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(10,4,40,.45);transition:transform .25s cubic-bezier(.3,1.5,.5,1)}
+.wl-btn.sec{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.55);box-shadow:none}
+.wl-btn:active{transform:scale(.96)}
+.au{position:fixed;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:480px;z-index:105;display:flex;flex-direction:column;background:#07040f;transform:translateX(100%);visibility:hidden;transition:transform .5s cubic-bezier(.22,1,.3,1),visibility 0s .5s}
+.au.open{transform:none;visibility:visible;transition-delay:0s}
+.au-top{position:relative;flex:none;display:flex;align-items:flex-start;justify-content:space-between;height:calc(env(safe-area-inset-top) + 150px);padding:calc(env(safe-area-inset-top) + 16px) 16px 0;overflow:hidden;background:radial-gradient(100% 120% at 0% 0%,rgba(255,63,164,.35),transparent 60%),radial-gradient(90% 120% at 100% 100%,rgba(47,107,255,.4),transparent 62%),linear-gradient(180deg,#1b0f48,#0c0624);border-bottom:1px solid rgba(190,150,255,.3)}
+.au-top button{position:relative;z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:none;color:#fff;font-size:20px;cursor:pointer;display:grid;place-items:center;transition:background .25s,transform .25s cubic-bezier(.3,1.5,.5,1)}
+.au-top button:active{background:rgba(255,255,255,.14);transform:scale(.88)}
+.au-brand{position:absolute;left:0;right:0;bottom:22px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.au-brand svg{width:46px;height:54px;color:#fff;--g:#1b0f48;filter:drop-shadow(0 0 12px rgba(200,150,255,.6))}
+.au-brand b{font-size:22px;font-weight:800}
+.au-brand b span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.au-sc{flex:1;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:16px;padding:26px 24px calc(env(safe-area-inset-bottom) + 24px);background:radial-gradient(80% 40% at 50% 100%,rgba(139,92,255,.12),transparent 70%)}
+.au.open .au-sc>*{animation:rise .55s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(.15s + var(--k,0)*.05s)}
+.au-h{font-size:26px;font-weight:400;text-align:center;line-height:1.2;margin:2px 0 4px}
+.au-err{display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:10px;background:#2a2733;border-left:5px solid #ff2d55;font-size:15.5px;line-height:1.4;animation:shk .45s}
+.au-err i{flex:none;font-size:26px;color:#ff2d55}
+.au-err.ok{border-left-color:#8b5cff}.au-err.ok i{color:#b08bff}
+@keyframes shk{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.au form{display:flex;flex-direction:column;gap:16px}
+.fl>span{display:block;margin-bottom:8px;font-size:15px;color:#e9e1ff}
+.fl input{width:100%;height:54px;padding:0 16px;border-radius:12px;border:1px solid rgba(190,150,255,.55);background:rgba(255,255,255,.03);color:#fff;font:inherit;font-size:17px;outline:0;user-select:text;-webkit-user-select:text;transition:border-color .25s,box-shadow .25s,background .25s}
+.fl input:focus{border-color:#c9a8ff;background:rgba(139,92,255,.08);box-shadow:0 0 0 3px rgba(139,92,255,.3)}
+.fl input::placeholder{color:#7d739f}
+.pw{position:relative}.pw input{padding-right:54px}
+.eye{position:absolute;right:4px;top:5px;width:44px;height:44px;border:0;background:none;color:#fff;font-size:18px;cursor:pointer}
+.au-go{width:100%;height:56px;margin-top:6px;border:2px solid #0b0620;border-radius:999px;background:var(--grad);color:#fff;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 0 0 3px rgba(255,255,255,.9),0 10px 30px rgba(139,92,255,.4);transition:transform .25s cubic-bezier(.3,1.5,.5,1),opacity .25s}
+.au-go:active{transform:scale(.97)}
+.au-go.busy{opacity:.65;pointer-events:none}
+.au-lk{border:0;background:none;color:#4aa3ff;font-size:16px;text-decoration:underline;text-underline-offset:3px;padding:8px;cursor:pointer;text-align:center}
+.au-help{margin-top:auto;padding-top:8px;text-align:center;color:#4aa3ff;font-size:16px;text-decoration:underline;text-underline-offset:3px}
+.soc{display:flex;flex-direction:column;gap:10px}
+.sb{display:flex;align-items:center;justify-content:center;gap:12px;height:52px;border-radius:999px;border:1px solid rgba(190,150,255,.45);background:rgba(255,255,255,.06);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.5,.5,1),background .25s,opacity .25s}
+.sb i{font-size:19px}
+.sb:active{transform:scale(.97);background:rgba(139,92,255,.22)}
+.sb.busy{opacity:.55;pointer-events:none}
+.or{display:flex;align-items:center;gap:12px;color:var(--mut);font-size:13px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:rgba(190,150,255,.3)}
 
 /* Barra inferior */
 .nav{--i:1;--o:6;position:fixed;bottom:0;left:50%;width:min(100%,480px);height:calc(136px + env(safe-area-inset-bottom));z-index:30;transform:translateX(-50%) translateY(100%);animation:up .8s cubic-bezier(.2,.8,.2,1) .35s forwards;pointer-events:none}
@@ -306,6 +412,48 @@ body.dclose main,body.dclose .top{transition-duration:.4s}
 </style>
 </head>
 <body>
+<div class="wl" id="wl">
+  <div class="wl-bg"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
+  <div class="wl-c"><svg class="wl-logo" aria-hidden="true"><use href="#bag"/></svg><p class="wl-t">Bienvenido a GioStore</p></div>
+  <div class="wl-b" id="wlb"><button class="wl-link" id="wlh">¿Tienes problemas para iniciar sesión?</button><button class="wl-btn" id="wlin">Iniciar sesión</button><button class="wl-btn sec" id="wlreg">Registrarte</button></div>
+</div>
+<section class="au" id="au-login" aria-label="Iniciar sesión">
+  <div class="au-top"><button class="bk" aria-label="Atrás"><i class="fa-solid fa-chevron-left"></i></button><div class="au-brand"><svg aria-hidden="true"><use href="#bag"/></svg><b>Gio<span>Store</span></b></div><button class="xx" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="au-sc">
+    <h2 class="au-h">Iniciar sesión en GioStore</h2>
+    <div class="au-err" hidden role="alert"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
+    <form novalidate>
+      <label class="fl"><span>Correo electrónico</span><input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"></label>
+      <label class="fl"><span>Contraseña</span><div class="pw"><input name="pw" type="password" autocomplete="current-password"><button type="button" class="eye" aria-label="Mostrar contraseña"><i class="fa-solid fa-eye-slash"></i></button></div></label>
+      <button class="au-go" type="submit">Iniciar sesión</button>
+    </form>
+    <button class="au-lk" data-a="reset">¿Tienes problemas para iniciar sesión?</button>
+    <button class="au-lk" data-a="toreg">Crear cuenta nueva</button>
+    <a class="au-help" href="mailto:giohanguelmo52@gmail.com">Ayuda</a>
+  </div>
+</section>
+<section class="au" id="au-reg" aria-label="Crear cuenta">
+  <div class="au-top"><button class="bk" aria-label="Atrás"><i class="fa-solid fa-chevron-left"></i></button><div class="au-brand"><svg aria-hidden="true"><use href="#bag"/></svg><b>Gio<span>Store</span></b></div><button class="xx" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="au-sc">
+    <h2 class="au-h">Crear cuenta en GioStore</h2>
+    <div class="au-err" hidden role="alert"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
+    <div class="soc">
+      <button class="sb" data-p="google"><i class="fa-brands fa-google"></i>Continuar con Google</button>
+      <button class="sb" data-p="twitter"><i class="fa-brands fa-twitter"></i>Continuar con Twitter</button>
+      <button class="sb" data-p="github"><i class="fa-brands fa-github"></i>Continuar con GitHub</button>
+    </div>
+    <div class="or">o con tu correo</div>
+    <form novalidate>
+      <label class="fl"><span>Nombre de usuario</span><input name="name" type="text" maxlength="18" autocomplete="nickname" spellcheck="false"></label>
+      <label class="fl"><span>Correo electrónico</span><input name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"></label>
+      <label class="fl"><span>Contraseña</span><div class="pw"><input name="pw" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres"><button type="button" class="eye" aria-label="Mostrar contraseña"><i class="fa-solid fa-eye-slash"></i></button></div></label>
+      <label class="fl"><span>Confirmar contraseña</span><div class="pw"><input name="pw2" type="password" autocomplete="new-password"><button type="button" class="eye" aria-label="Mostrar contraseña"><i class="fa-solid fa-eye-slash"></i></button></div></label>
+      <button class="au-go" type="submit">Crear cuenta</button>
+    </form>
+    <button class="au-lk" data-a="tologin">¿Ya tienes cuenta? Inicia sesión</button>
+    <a class="au-help" href="mailto:giohanguelmo52@gmail.com">Ayuda</a>
+  </div>
+</section>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3fa4"/><stop offset=".5" stop-color="#8b5cff"/><stop offset="1" stop-color="#2f6bff"/></linearGradient></defs><symbol id="bag" viewBox="0 0 48 56"><path d="M17 16v-3a7 7 0 0 1 14 0v3" fill="none" style="stroke:var(--bf,currentColor)" stroke-width="4" stroke-linecap="round"/><path d="M6 17h36l2.5 30a6 6 0 0 1-6 6.5H9.500A6 6 0 0 1 3.500 47z" style="fill:var(--bf,currentColor)"/><text x="24" y="45" text-anchor="middle" font-family="Albert Sans,Arial,sans-serif" font-weight="800" font-size="27" fill="var(--g)">G</text></symbol></svg>
 
 <header class="top">
@@ -502,21 +650,17 @@ function exShow(){
 }
 chips.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||+b.dataset.i===ek)return;ek=+b.dataset.i;exShow();b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});if(navigator.vibrate)navigator.vibrate(8)});
 exb.addEventListener('click',e=>{const c=e.target.closest('.card'),a=e.target.closest('.cta');if(c)openDet(c.dataset.k);else if(a)openDet(a.dataset.g)});
-/* Juegos (lista vertical) */
+/* Juegos (cuadrícula) */
 const gv=document.createElement('section');gv.className='view';gv.hidden=true;
-gv.innerHTML='<div class="gv"><div class="gh"><h2>Juegos</h2><p></p></div><div class="glist"></div></div>';
+gv.innerHTML='<div class="gv"><div class="gh"><h2>Juegos</h2><p></p></div><div class="lgrid"></div></div>';
 views.append(gv);vs[0]=gv;
-const glist=gv.querySelector('.glist'),gcount=gv.querySelector('.gh p');
-const gio='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');gio.unobserve(e.target)}}),{threshold:.1}):null;
+const glist=gv.querySelector('.lgrid'),gcount=gv.querySelector('.gh p');
 function gmShow(){
   const ks=Object.keys(GAMES);
   gcount.textContent=ks.length+' juegos disponibles';
-  glist.innerHTML=ks.map(k=>{const g=GAMES[k];
-    return '<article class="gm" data-k="'+k+'" role="button" tabindex="0" aria-label="'+g.n+'"><div class="dhero '+(g.c||'')+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</div><div class="gb"><h3>'+g.n+'</h3><p class="gp">'+g.pub+'</p><p class="gd2">'+g.ds+'</p><div class="gf"><span class="m">Lanzado '+g.d+'</span><span class="gbtn">Ver juego</span></div></div></article>'}).join('');
-  [...glist.children].forEach(el=>{if(gio)gio.observe(el);else requestAnimationFrame(()=>el.classList.add('in'))});
+  glist.innerHTML=ks.map((k,n)=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" data-k="'+k+'" style="--n:'+n+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'}).join('');
 }
-glist.addEventListener('click',e=>{const c=e.target.closest('.gm');if(c)openDet(c.dataset.k)});
-glist.addEventListener('keydown',e=>{if(e.key==='Enter'){const c=e.target.closest('.gm');if(c)openDet(c.dataset.k)}});
+glist.addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openDet(c.dataset.k)});
 /* Buscador */
 const SMAG='<svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>';
 const sv=document.createElement('section');sv.className='view';sv.hidden=true;
@@ -524,24 +668,183 @@ sv.innerHTML='<div class="sv"><div class="sbar">'+SMAG+'<input id="q" type="sear
 views.append(sv);vs[4]=sv;
 const qi=sv.querySelector('#q'),sbar=sv.querySelector('.sbar'),sres=sv.querySelector('.sres'),sclr=sv.querySelector('.sclr');
 const norm=t=>t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-const srow=(k,n)=>{const g=GAMES[k];return '<button class="sr" data-k="'+k+'" style="--n:'+n+'"><div class="card '+(g.c||'')+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</div><span class="srt"><b>'+g.n+'</b><small>'+g.pub+'</small></span>'+SV.chev+'</button>'};
+const KS=Object.keys(GAMES),TR=['dreams','horizon','journey','wipeout'];
+const srow=(k,n,h)=>{const g=GAMES[k];return '<button class="sr"'+(h?' hidden data-v="0"':'')+' data-k="'+k+'" style="--n:'+n+'"><div class="card '+(g.c||'')+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</div><span class="srt"><b>'+g.n+'</b><small>'+g.pub+'</small></span>'+SV.chev+'</button>'};
+sres.innerHTML='<div class="sidle"><h3 class="sst">Búsquedas populares</h3><div class="stg">'+['horizon','dreams','journey','ratchet','uncharted','genie'].map((k,i)=>'<button style="--n:'+i+'" data-t="'+GAMES[k].t+'">'+GAMES[k].t+'</button>').join('')+'</div><h3 class="sst">Tendencias</h3>'+TR.map((k,i)=>srow(k,i)).join('')+'</div>'+
+ '<div class="sfound" hidden><p class="srn"></p><div class="sl">'+KS.map(k=>srow(k,0,1)).join('')+'</div><div class="soon snone" hidden><div class="ic"><i class="fa-solid fa-magnifying-glass"></i></div><h2>Sin resultados</h2><p></p></div></div>';
+const sidle=sres.querySelector('.sidle'),sfound=sres.querySelector('.sfound'),srn=sres.querySelector('.srn'),snone=sres.querySelector('.snone'),snp=snone.querySelector('p'),srows=[...sfound.querySelectorAll('.sr')];
+let smode='i';
+function setMode(m){
+  if(m===smode)return;smode=m;sidle.hidden=m!=='i';sfound.hidden=m==='i';
+  if(m==='i'){srows.forEach(r=>{clearTimeout(r._t);r.hidden=true;r.dataset.v='0';r.classList.remove('an','out')});snone.hidden=true}
+}
+function setRow(el,show,j){
+  const on=el.dataset.v==='1';if(show===on)return false;
+  el.dataset.v=show?'1':'0';clearTimeout(el._t);
+  if(show){el.style.setProperty('--n',j);el.hidden=false;el.classList.remove('out','an');void el.offsetWidth;el.classList.add('an');return true}
+  el.classList.remove('an');el.classList.add('out');
+  el._t=setTimeout(()=>{el.hidden=true;el.classList.remove('out')},260);return false;
+}
 function srShow(){
   const v=qi.value.trim();sbar.classList.toggle('has',!!qi.value);
-  if(!v){
-    sres.innerHTML='<h3 class="sst">Búsquedas populares</h3><div class="stg">'+['horizon','dreams','journey','ratchet','uncharted','genie'].map(k=>'<button data-t="'+GAMES[k].t+'">'+GAMES[k].t+'</button>').join('')+'</div><h3 class="sst">Tendencias</h3>'+['dreams','horizon','journey','wipeout'].map(srow).join('');
-    return}
-  const m=Object.keys(GAMES).filter(k=>{const g=GAMES[k];return norm(g.n+' '+g.t+' '+g.pub).includes(norm(v))});
-  sres.innerHTML=m.length?'<p class="srn">'+m.length+(m.length===1?' resultado':' resultados')+'</p>'+m.map(srow).join(''):
-   '<div class="soon"><div class="ic"><i class="fa-solid fa-magnifying-glass"></i></div><h2>Sin resultados</h2><p>No encontramos juegos para “'+v.replace(/[<>&"]/g,'')+'”. Prueba con otro nombre.</p></div>';
+  if(!v){setMode('i');return}
+  setMode('f');
+  const q=norm(v);let c=0,j=0;
+  srows.forEach(r=>{const g=GAMES[r.dataset.k],ok=norm(g.n+' '+g.t+' '+g.pub).includes(q);if(ok)c++;if(setRow(r,ok,j))j++});
+  srn.hidden=!c;srn.textContent=c+(c===1?' resultado':' resultados');
+  if(c){snone.hidden=true}else{snp.textContent='No encontramos juegos para “'+v.replace(/[<>&"]/g,'')+'”. Prueba con otro nombre.';snone.hidden=false}
 }
-qi.addEventListener('input',()=>{sres.classList.add('t');srShow()});
+qi.addEventListener('input',srShow);
 qi.addEventListener('keydown',e=>{if(e.key==='Enter')qi.blur()});
-sclr.addEventListener('click',()=>{qi.value='';sres.classList.add('t');srShow();qi.focus()});
+sclr.addEventListener('click',()=>{qi.value='';srShow();qi.focus()});
 sres.addEventListener('click',e=>{
   const t=e.target.closest('.stg button');
-  if(t){qi.value=t.dataset.t;sres.classList.add('t');srShow();if(navigator.vibrate)navigator.vibrate(8);return}
+  if(t){qi.value=t.dataset.t;srShow();if(navigator.vibrate)navigator.vibrate(8);return}
   const r=e.target.closest('.sr');if(r){qi.blur();openDet(r.dataset.k)}});
-function srEnter(){sres.classList.remove('t');srShow();sv.firstChild.classList.remove('in2');void sv.offsetWidth;sv.firstChild.classList.add('in2');setTimeout(()=>{if(cur===4)qi.focus({preventScroll:true})},420)}
+function srEnter(){srShow();sv.firstChild.classList.remove('in2');void sv.offsetWidth;sv.firstChild.classList.add('in2');setTimeout(()=>{if(cur===4)qi.focus({preventScroll:true})},420)}
+/* Mi cuenta */
+const LSg=k=>{try{return localStorage.getItem(k)}catch(e){return null}},LSs=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},LSd=k=>{try{localStorage.removeItem(k)}catch(e){}};
+const DEF={vib:true,fx:true,noti:false};
+let S;try{S=Object.assign({},DEF,JSON.parse(LSg('gs-set')||'{}'))}catch(e){S={...DEF}}
+let uname='Usuario';
+const saveS=()=>LSs('gs-set',JSON.stringify(S));
+const _vb=navigator.vibrate?navigator.vibrate.bind(navigator):null;
+if(_vb)navigator.vibrate=function(p){return S.vib?_vb(p):false};
+const applyFx=()=>document.body.classList.toggle('nofx',!S.fx);applyFx();
+const tst=document.createElement('div');tst.className='toast';tst.setAttribute('role','status');document.body.append(tst);
+let tt;const toast=m=>{tst.textContent=m;tst.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>tst.classList.remove('show'),2400)};
+const mrow=(id,ic,t,sub,sw)=>'<button class="mrow" data-a="'+id+'"'+(sw?' role="switch" aria-checked="false"':'')+'><span class="mi2"><i class="fa-solid '+ic+'"></i></span><span class="t"><b>'+t+'</b><small>'+sub+'</small></span>'+(sw?'<span class="swt"></span>':'<i class="fa-solid fa-chevron-right"></i>')+'</button>';
+const menu=document.createElement('div');menu.className='menu';menu.setAttribute('aria-hidden','true');
+menu.innerHTML='<div class="mscrim"></div><aside class="mpanel" role="dialog" aria-label="Mi cuenta">'+
+ '<div class="mh"><h2>Mi cuenta</h2><button class="mx" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button></div>'+
+ '<div class="acc"><div class="av2"></div><div class="ai"><div class="nm"><b id="un"></b><input id="uni" maxlength="18" hidden autocomplete="off" spellcheck="false" aria-label="Nombre"><button class="pen" aria-label="Editar nombre"><i class="fa-solid fa-pen"></i></button></div><small class="em"></small><small>Dispositivo vinculado: <b>Conectado</b></small></div></div>'+
+ '<h3 class="mt">Ajustes</h3>'+
+ mrow('vib','fa-mobile-screen-button','Vibración','Respuesta háptica al tocar',1)+
+ mrow('fx','fa-wand-magic-sparkles','Animaciones','Efectos y transiciones suaves',1)+
+ mrow('noti','fa-bell','Notificaciones','Avisos de novedades y juegos',1)+
+ '<h3 class="mt">Aplicación</h3>'+
+ mrow('install','fa-download','Instalar app','Ábrela en pantalla completa')+
+ mrow('reset','fa-rotate-left','Restablecer ajustes','Volver a la configuración original')+
+ '<div class="mfoot"><button class="mlo"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sesión</button><div class="mver">GioStore 2.0</div></div></aside>';
+document.body.append(menu);
+[...menu.querySelector('.mpanel').children].forEach((el,i)=>el.style.setProperty('--k',i));
+const dlg=document.createElement('div');dlg.className='dlg';
+dlg.innerHTML='<div class="dscrim"></div><div class="dcard" role="alertdialog" aria-label="Cerrar sesión"><div class="dic"><i class="fa-solid fa-right-from-bracket"></i></div><h3>¿Cerrar sesión?</h3><p>Tendrás que volver a iniciar sesión para usar tu cuenta.</p><div class="dbt"><button class="dno">Cancelar</button><button class="dyes">Cerrar sesión</button></div></div>';
+document.body.append(dlg);
+const un=menu.querySelector('#un'),uni=menu.querySelector('#uni'),pen=menu.querySelector('.pen'),av2=menu.querySelector('.av2');
+const paintUser=()=>{un.textContent=uname;av2.textContent=(uname.trim()[0]||'G').toUpperCase()};paintUser();
+const refreshRows=()=>menu.querySelectorAll('.mrow[role=switch]').forEach(r=>r.setAttribute('aria-checked',String(!!S[r.dataset.a])));refreshRows();
+function editName(){uni.value=uname;un.hidden=true;pen.hidden=true;uni.hidden=false;uni.focus();uni.select()}
+function endName(save){if(uni.hidden)return;const v=uni.value.trim();uni.hidden=true;un.hidden=false;pen.hidden=false;
+  if(save&&v&&v!==uname){uname=v;paintUser();toast('Nombre actualizado');if(window.GSA)GSA.rename(v).catch(()=>toast('No se pudo guardar el nombre'))}}
+uni.addEventListener('keydown',e=>{if(e.key==='Enter')endName(true);else if(e.key==='Escape'){e.stopPropagation();endName(false)}});
+uni.addEventListener('blur',()=>endName(true));
+let mopen=false;
+function openMenu(){if(mopen)return;mopen=true;menu.classList.add('open');menu.setAttribute('aria-hidden','false');document.body.classList.add('mopen');
+  try{history.pushState({m:1},'')}catch(e){}if(navigator.vibrate)navigator.vibrate(10)}
+function closeMenu(pop){if(!mopen)return;mopen=false;endName(false);menu.classList.remove('open');menu.setAttribute('aria-hidden','true');document.body.classList.remove('mopen');
+  if(!pop&&history.state&&history.state.m){try{history.back()}catch(e){}}if(navigator.vibrate)navigator.vibrate(8)}
+async function setNoti(on){
+  if(!on){S.noti=false;saveS();return true}
+  if(!('Notification' in window)){toast('Tu navegador no admite notificaciones');return false}
+  let p=Notification.permission;if(p==='default'){try{p=await Notification.requestPermission()}catch(e){}}
+  if(p!=='granted'){toast('Permiso de notificaciones denegado');return false}
+  S.noti=true;saveS();
+  try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();
+    if(reg)reg.showNotification('GioStore',{body:'Notificaciones activadas',icon:'icon-192.png'});else new Notification('GioStore',{body:'Notificaciones activadas'})}catch(e){}
+  return true}
+async function rowAct(a){
+  if(a==='vib'){S.vib=!S.vib;saveS();refreshRows();if(S.vib&&_vb)_vb(20);toast(S.vib?'Vibración activada':'Vibración desactivada')}
+  else if(a==='fx'){S.fx=!S.fx;saveS();applyFx();refreshRows();toast(S.fx?'Animaciones activadas':'Animaciones desactivadas')}
+  else if(a==='noti'){const on=!S.noti,ok=await setNoti(on);refreshRows();if(ok)toast(on?'Notificaciones activadas':'Notificaciones desactivadas')}
+  else if(a==='install'){
+    if(standalone){toast('GioStore ya está instalada');return}
+    if(dp){closeMenu();dp.prompt();try{await dp.userChoice}catch(e){}dp=null;box.hidden=true;return}
+    if(/iphone|ipad|ipod/i.test(navigator.userAgent)){closeMenu();setTimeout(()=>{box.hidden=false},500);return}
+    toast('Usa el menú del navegador y elige “Instalar app”')}
+  else if(a==='reset'){S={...DEF};saveS();applyFx();refreshRows();if(_vb)_vb(20);toast('Ajustes restablecidos')}
+}
+menu.addEventListener('click',e=>{
+  if(e.target.closest('.mscrim,.mx'))return closeMenu();
+  if(e.target.closest('.pen,#un'))return editName();
+  if(e.target.closest('.mlo'))return dlg.classList.add('open');
+  const r=e.target.closest('.mrow');if(r)rowAct(r.dataset.a)});
+dlg.addEventListener('click',e=>{
+  if(e.target.closest('.dno,.dscrim'))return dlg.classList.remove('open');
+  if(e.target.closest('.dyes'))doLogout()});
+async function doLogout(){
+  dlg.classList.remove('open');closeMenu();closeDet();
+  try{if(window.GSA)await GSA.logout();else onAuth(null)}catch(e){toast('No se pudo cerrar sesión')}}
+xv.querySelector('.hmb').addEventListener('click',openMenu);
+addEventListener('popstate',()=>{closeMenu(true);dlg.classList.remove('open')});
+addEventListener('keydown',e=>{if(e.key==='Escape'){if(dlg.classList.contains('open'))dlg.classList.remove('open');else closeMenu()}});
+/* Bienvenida + acceso con Firebase */
+const wl=document.getElementById('wl'),wlb=document.getElementById('wlb'),aL=document.getElementById('au-login'),aR=document.getElementById('au-reg');
+const EMR=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+let authReady=false,curUser=null,btnReady=false,hideT=0,inApp=false,bound=false;const t0=performance.now();
+[aL,aR].forEach(a=>[...a.querySelector('.au-sc').children].forEach((el,i)=>el.style.setProperty('--k',i)));
+const paintEmail=m=>{menu.querySelector('.em').textContent=m||''};
+const errMsg=e=>{const c=e&&e.code||'';
+  if(/user-not-found|wrong-password|invalid-credential|invalid-login/.test(c))return'Correo o contraseña incorrectos.';
+  return({'auth/invalid-email':'El correo no es válido.','auth/email-already-in-use':'Ya existe una cuenta con ese correo.','auth/weak-password':'La contraseña debe tener al menos 6 caracteres.','auth/network-request-failed':'No se puede establecer conexión con el servidor.','auth/too-many-requests':'Demasiados intentos. Inténtalo más tarde.','auth/user-disabled':'Esta cuenta está deshabilitada.','auth/operation-not-allowed':'Este método de acceso aún no está habilitado.','auth/unauthorized-domain':'Este dominio no está autorizado en Firebase.','auth/account-exists-with-different-credential':'Ya existe una cuenta con ese correo usando otro método.','auth/missing-email':'Escribe tu correo electrónico.'})[c]||'No se pudo completar la operación. Inténtalo de nuevo.'};
+function showErr(scr,msg,ok){const b=scr.querySelector('.au-err');b.querySelector('span').textContent=msg;b.querySelector('i').className='fa-solid '+(ok?'fa-circle-check':'fa-circle-exclamation');b.classList.toggle('ok',!!ok);b.hidden=false;b.style.animation='none';void b.offsetWidth;b.style.animation='';if(!ok&&navigator.vibrate)navigator.vibrate(30)}
+const clearErr=scr=>{scr.querySelector('.au-err').hidden=true};
+function setBusy(btn,on,label){if(!btn.dataset.l)btn.dataset.l=btn.textContent.trim();btn.classList.toggle('busy',on);btn.disabled=on;if(btn.classList.contains('au-go'))btn.textContent=on?label:btn.dataset.l}
+function authOpen(w){clearErr(aL);clearErr(aR);if(w==='login'){aL.classList.add('open');aR.classList.remove('open')}else aR.classList.add('open');if(navigator.vibrate)navigator.vibrate(10)}
+function authBack(){if(aR.classList.contains('open'))aR.classList.remove('open');else aL.classList.remove('open')}
+function closeAuthAll(){aL.classList.remove('open');aR.classList.remove('open');document.querySelectorAll('.au input[type=password]').forEach(i=>{i.value='';i.type='password'});document.querySelectorAll('.eye i').forEach(i=>i.className='fa-solid fa-eye-slash')}
+function hideWelcome(){inApp=true;wl.classList.add('out');wlb.classList.remove('show');setTimeout(closeAuthAll,300)}
+function settle(){
+  if(!authReady)return;
+  if(curUser){if(hideT)return;hideT=setTimeout(()=>{hideT=0;hideWelcome()},Math.max(0,3000-(performance.now()-t0)))}
+  else if(btnReady)wlb.classList.add('show');
+}
+setTimeout(()=>{btnReady=true;settle()},1500);
+setTimeout(()=>{if(!authReady){authReady=true;settle()}},6500);
+function onAuth(u){
+  authReady=true;curUser=u;
+  if(u){uname=u.name||(u.email||'Usuario').split('@')[0];paintUser();paintEmail(u.email)}
+  else if(inApp){inApp=false;clearTimeout(hideT);hideT=0;closeAuthAll();wl.classList.remove('out');void wl.offsetWidth;wlb.classList.add('show');go(1);uname='Usuario';paintUser();paintEmail('')}
+  settle();
+}
+function bindFB(){if(window.GSA&&!bound){bound=true;GSA.onUser(onAuth)}}
+addEventListener('gsa',bindFB);bindFB();
+const needFB=()=>{if(!window.GSA)throw{code:'auth/network-request-failed'}};
+const ok=u=>{const n=u&&(u.name||(u.email||'').split('@')[0])||'';toast('Bienvenido, '+n)};
+aL.querySelector('form').addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.target,btn=f.querySelector('.au-go'),em=f.email.value.trim(),pw=f.pw.value;
+  if(!em||!pw)return showErr(aL,'Escribe tu correo y tu contraseña.');
+  if(!EMR.test(em))return showErr(aL,'El correo no es válido.');
+  clearErr(aL);setBusy(btn,true,'Iniciando sesión…');
+  try{needFB();ok(await GSA.login(em,pw))}catch(err){showErr(aL,errMsg(err))}finally{setBusy(btn,false)}});
+aR.querySelector('form').addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.target,btn=f.querySelector('.au-go'),nm=f.name.value.trim(),em=f.email.value.trim(),pw=f.pw.value,pw2=f.pw2.value;
+  if(!nm)return showErr(aR,'Elige un nombre de usuario.');
+  if(!EMR.test(em))return showErr(aR,'El correo no es válido.');
+  if(pw.length<6)return showErr(aR,'La contraseña debe tener al menos 6 caracteres.');
+  if(pw!==pw2)return showErr(aR,'Las contraseñas no coinciden.');
+  clearErr(aR);setBusy(btn,true,'Creando cuenta…');
+  try{needFB();ok(await GSA.register(nm,em,pw))}catch(err){showErr(aR,errMsg(err))}finally{setBusy(btn,false)}});
+aR.querySelector('.soc').addEventListener('click',async e=>{
+  const b=e.target.closest('.sb');if(!b)return;clearErr(aR);b.classList.add('busy');
+  try{needFB();const u=await GSA.social(b.dataset.p);if(u)ok(u)}
+  catch(err){if(!/popup-closed-by-user|cancelled-popup-request/.test(err&&err.code||''))showErr(aR,errMsg(err))}
+  finally{b.classList.remove('busy')}});
+document.querySelectorAll('.au').forEach(a=>a.addEventListener('click',async e=>{
+  if(e.target.closest('.bk'))return authBack();
+  if(e.target.closest('.xx'))return closeAuthAll();
+  const ey=e.target.closest('.eye');
+  if(ey){const i=ey.parentNode.querySelector('input'),s=i.type==='password';i.type=s?'text':'password';ey.querySelector('i').className='fa-solid '+(s?'fa-eye':'fa-eye-slash');return}
+  const l=e.target.closest('.au-lk');if(!l)return;
+  if(l.dataset.a==='toreg')return authOpen('register');
+  if(l.dataset.a==='tologin')return authOpen('login');
+  if(l.dataset.a==='reset'){const em=aL.querySelector('input[name=email]').value.trim();
+    if(!EMR.test(em))return showErr(aL,'Escribe tu correo arriba y vuelve a tocar esta opción.');
+    try{needFB();await GSA.reset(em);showErr(aL,'Te enviamos un correo para restablecer tu contraseña.',true)}catch(err){showErr(aL,errMsg(err))}}}));
+document.getElementById('wlin').addEventListener('click',()=>authOpen('login'));
+document.getElementById('wlh').addEventListener('click',()=>authOpen('login'));
+document.getElementById('wlreg').addEventListener('click',()=>authOpen('register'));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&(aL.classList.contains('open')||aR.classList.contains('open')))authBack()});
 let cur=1;
 function go(i){
   if(i===cur)return;
@@ -576,6 +879,40 @@ if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone){itxt.innerHTML='T
 ibtn.addEventListener('click',async()=>{if(!dp)return;dp.prompt();try{await dp.userChoice}catch(e){}dp=null;box.hidden=true});
 document.getElementById('ix').addEventListener('click',()=>{box.hidden=true;try{localStorage.setItem('gs-inst','1')}catch(e){}});
 addEventListener('appinstalled',()=>{box.hidden=true});
+</script>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,signOut,sendPasswordResetEmail,GoogleAuthProvider,TwitterAuthProvider,GithubAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import{getDatabase,ref,get,update}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+const app=initializeApp({apiKey:"AIzaSyBMIyvUy5MSnF9rcuzUz0-mNmONyiBvI8w",authDomain:"giostream11.firebaseapp.com",databaseURL:"https://giostream11-default-rtdb.firebaseio.com",projectId:"giostream11",storageBucket:"giostream11.firebasestorage.app",messagingSenderId:"907303340383",appId:"1:907303340383:web:3f5545b847dcbfccf60eea"});
+const auth=getAuth(app),db=getDatabase(app);auth.languageCode='es';
+const simple=u=>u?{uid:u.uid,name:u.displayName||'',email:u.email||'',photo:u.photoURL||'',provider:(u.providerData[0]&&u.providerData[0].providerId)||'password'}:null;
+const subs=[];let hold=false,init=false;
+const emit=()=>subs.forEach(f=>f(simple(auth.currentUser)));
+onAuthStateChanged(auth,()=>{init=true;if(!hold)emit()});
+async function save(u,extra){
+  try{const r=ref(db,'users/'+u.uid),s=await get(r),d=simple(u);
+    const base={name:d.name,email:d.email,photo:d.photo,provider:d.provider,lastLogin:Date.now()};
+    if(!s.exists())base.createdAt=Date.now();
+    await update(r,Object.assign(base,extra||{}))}catch(e){console.warn('Realtime Database:',e.code||e)}}
+const PR={google:()=>new GoogleAuthProvider(),twitter:()=>new TwitterAuthProvider(),github:()=>new GithubAuthProvider()};
+getRedirectResult(auth).then(r=>{if(r&&r.user)save(r.user)}).catch(()=>{});
+window.GSA={
+  onUser(f){subs.push(f);if(init)f(simple(auth.currentUser))},
+  async login(email,pw){const c=await signInWithEmailAndPassword(auth,email,pw);save(c.user);return simple(c.user)},
+  async register(name,email,pw){
+    hold=true;
+    try{const c=await createUserWithEmailAndPassword(auth,email,pw);await updateProfile(c.user,{displayName:name});await save(c.user,{name});return simple(auth.currentUser)}
+    finally{hold=false;if(auth.currentUser)emit()}},
+  async social(n){
+    const p=PR[n]();
+    try{const c=await signInWithPopup(auth,p);save(c.user);return simple(c.user)}
+    catch(e){if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment','auth/web-storage-unsupported'].includes(e.code)){await signInWithRedirect(auth,p);return null}throw e}},
+  reset(email){return sendPasswordResetEmail(auth,email)},
+  logout(){return signOut(auth)},
+  async rename(name){const u=auth.currentUser;if(!u)return;await updateProfile(u,{displayName:name});try{await update(ref(db,'users/'+u.uid),{name})}catch(e){}emit()}
+};
+window.dispatchEvent(new Event('gsa'));
 </script>
 </body>
 </html>
