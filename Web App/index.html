@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
 <title>GioStore</title>
 <meta name="theme-color" content="#07040f">
 <meta name="color-scheme" content="dark">
@@ -15,14 +15,15 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 <style>
 :root{--blue:#8b5cff;--grad:linear-gradient(110deg,#ff3fa4,#8b5cff 50%,#2f6bff);--mut:#a89fc8}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html{background:#000;overscroll-behavior:none;touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{font-family:'Albert Sans',system-ui,sans-serif;background:#07040f;color:#fff;max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;position:relative;user-select:none;-webkit-user-select:none;overscroll-behavior-y:none;overflow-x:clip;touch-action:manipulation;-webkit-touch-callout:none;-webkit-text-size-adjust:100%;box-shadow:0 0 0 1px #1a1038}
+html{background:#000;overscroll-behavior:none;touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:'Albert Sans',system-ui,sans-serif;background:#07040f;color:#fff;max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;position:relative;user-select:none;-webkit-user-select:none;overscroll-behavior-y:none;overflow-x:clip;touch-action:pan-x pan-y;-webkit-touch-callout:none;-webkit-text-size-adjust:100%;box-shadow:0 0 0 1px #1a1038}
 button{font-family:inherit}
 
 /* Header */
@@ -393,8 +394,9 @@ body.mopen .det{z-index:65}
 .tab.on svg.ln{stroke:url(#brand)}
 .tab.on svg.bagi{--bf:url(#brand)}
 .tab:active{transform:translateY(var(--y)) rotate(var(--r)) scale(.82)}
-.ind{position:absolute;top:calc(76px + var(--o)*.6px);left:calc(var(--i)*20% + 10%);width:42px;height:4px;border-radius:4px;background:var(--grad);box-shadow:0 0 14px 2px rgba(139,92,255,.85);transform:translateX(-50%);transition:left .45s cubic-bezier(.3,1.3,.5,1),top .45s cubic-bezier(.3,1.3,.5,1);animation:glow 2.4s ease-in-out infinite}
-@keyframes glow{50%{box-shadow:0 0 20px 4px rgba(190,100,255,.95)}}
+.ind{position:absolute;top:calc(76px + var(--o)*.6px);left:calc(var(--i)*20% + 10%);width:42px;height:4px;border-radius:4px;background:var(--grad);box-shadow:0 0 14px 2px rgba(139,92,255,.85);transform:translateX(-50%);transition:left .45s cubic-bezier(.3,1.3,.5,1),top .45s cubic-bezier(.3,1.3,.5,1)}
+.ind::after{content:"";position:absolute;inset:0;border-radius:4px;box-shadow:0 0 20px 4px rgba(190,100,255,.95);opacity:0;animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{50%{opacity:1}}
 .lbl{position:absolute;top:98px;left:clamp(36px,calc(var(--i)*20% + 10%),calc(100% - 36px));transform:translateX(-50%);font-size:16px;font-weight:500;white-space:nowrap;transition:left .45s cubic-bezier(.3,1.3,.5,1),top .45s cubic-bezier(.3,1.3,.5,1)}
 .lbl.pop{animation:pop .35s ease both}
 @keyframes pop{from{opacity:0;margin-top:6px}to{opacity:1;margin-top:0}}
@@ -405,13 +407,18 @@ body.mopen .det{z-index:65}
 .install #ix{background:none;color:var(--mut);font-size:22px;padding:0 4px;line-height:1}
 @keyframes pill{from{opacity:0;transform:translateX(-50%) translateY(14px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.post{opacity:1;transform:none}.nav{transform:translateX(-50%)}}
+.top::before,.ban::after,.ph{will-change:transform}
+body.cover main,body.cover .top,body.cover .nav{visibility:hidden}
+.wl.out *,.wl.out *::before{animation-play-state:paused!important}
+a.wl-link{text-decoration:none;display:inline-block}
+a.au-lk{display:block}
 </style>
 </head>
 <body>
 <div class="wl" id="wl">
   <div class="wl-bg"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
   <div class="wl-c"><svg class="wl-logo" aria-hidden="true"><use href="#bag"/></svg><p class="wl-t">Bienvenido a GioStore</p></div>
-  <div class="wl-b" id="wlb"><button class="wl-link" id="wlh">¿Tienes problemas para iniciar sesión?</button><button class="wl-btn" id="wlin">Iniciar sesión</button><button class="wl-btn sec" id="wlreg">Registrarte</button></div>
+  <div class="wl-b" id="wlb"><a class="wl-link" id="wlh" href="https://giostoredigital.onrender.com" target="_blank" rel="noopener">¿Tienes problemas para iniciar sesión?</a><button class="wl-btn" id="wlin">Iniciar sesión</button><button class="wl-btn sec" id="wlreg">Registrarte</button></div>
 </div>
 <section class="au" id="au-login" aria-label="Iniciar sesión">
   <div class="au-top"><button class="bk" aria-label="Atrás"><i class="fa-solid fa-chevron-left"></i></button><div class="au-brand"><svg aria-hidden="true"><use href="#bag"/></svg><b>Gio<span>Store</span></b></div><button class="xx" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button></div>
@@ -423,7 +430,7 @@ body.mopen .det{z-index:65}
       <label class="fl"><span>Contraseña</span><div class="pw"><input name="pw" type="password" autocomplete="current-password"><button type="button" class="eye" aria-label="Mostrar contraseña"><i class="fa-solid fa-eye-slash"></i></button></div></label>
       <button class="au-go" type="submit">Iniciar sesión</button>
     </form>
-    <button class="au-lk" data-a="reset">¿Tienes problemas para iniciar sesión?</button>
+    <a class="au-lk" href="https://giostoredigital.onrender.com" target="_blank" rel="noopener">¿Tienes problemas para iniciar sesión?</a>
     <button class="au-lk" data-a="toreg">Crear cuenta nueva</button>
     <a class="au-help" href="mailto:giohanguelmo52@gmail.com">Ayuda</a>
   </div>
@@ -548,6 +555,7 @@ function slide(sg,b,first){const p=sg.querySelector('.pill');if(!b||!b.offsetWid
   if(first)p.style.transition='none';
   p.style.width=b.offsetWidth+'px';p.style.transform='translateX('+b.offsetLeft+'px)';
   if(first){void p.offsetWidth;p.style.transition=''}}
+let cvT=0;function cover(on){clearTimeout(cvT);if(on)cvT=setTimeout(()=>document.body.classList.add('cover'),650);else document.body.classList.remove('cover')}
 function openDet(k){
   const g=GAMES[k];if(!g)return;clearTimeout(ht);
   dsc.innerHTML=
@@ -565,12 +573,12 @@ function openDet(k){
   det.hidden=false;det.classList.remove('out','in');void det.offsetWidth;det.classList.add('in');
   dsc.scrollTop=0;
   const sg=dsc.querySelector('.seg');requestAnimationFrame(()=>slide(sg,sg.querySelector('.on'),true));
-  try{history.pushState({d:1},'')}catch(e){}
+  try{history.pushState({d:1},'')}catch(e){}cover(true);
   if(navigator.vibrate)navigator.vibrate(10);
 }
 function closeDet(pop){
   if(det.hidden||det.classList.contains('out'))return;
-  det.classList.remove('in');det.classList.add('out');
+  det.classList.remove('in');det.classList.add('out');if(!mopen)cover(false);
   document.body.classList.add('dclose');document.body.classList.remove('dopen');
   ht=setTimeout(()=>{det.hidden=true;det.classList.remove('out');document.body.classList.remove('dclose')},410);
   if(navigator.vibrate)navigator.vibrate(8);
@@ -739,9 +747,9 @@ function endName(save){if(uni.hidden)return;const v=uni.value.trim();uni.hidden=
 uni.addEventListener('keydown',e=>{if(e.key==='Enter')endName(true);else if(e.key==='Escape'){e.stopPropagation();endName(false)}});
 uni.addEventListener('blur',()=>endName(true));
 let mopen=false;
-function openMenu(){if(mopen)return;mopen=true;menu.querySelector('.mpanel').scrollTop=0;menuLib(true);menu.classList.add('open');menu.setAttribute('aria-hidden','false');document.body.classList.add('mopen');
+function openMenu(){if(mopen)return;mopen=true;cover(true);menu.querySelector('.mpanel').scrollTop=0;menuLib(true);menu.classList.add('open');menu.setAttribute('aria-hidden','false');document.body.classList.add('mopen');
   try{history.pushState({m:1},'')}catch(e){}if(navigator.vibrate)navigator.vibrate(10)}
-function closeMenu(pop){if(!mopen)return;mopen=false;endName(false);menu.classList.remove('open');menu.setAttribute('aria-hidden','true');document.body.classList.remove('mopen');
+function closeMenu(pop){if(!mopen)return;mopen=false;cover(false);endName(false);menu.classList.remove('open');menu.setAttribute('aria-hidden','true');document.body.classList.remove('mopen');
   if(!pop&&history.state&&history.state.m){try{history.back()}catch(e){}}if(navigator.vibrate)navigator.vibrate(8)}
 async function setNoti(on){
   if(!on){S.noti=false;saveS();return true}
@@ -794,7 +802,7 @@ function setBusy(btn,on,label){if(!btn.dataset.l)btn.dataset.l=btn.textContent.t
 function authOpen(w){clearErr(aL);clearErr(aR);if(w==='login'){aL.classList.add('open');aR.classList.remove('open')}else aR.classList.add('open');if(navigator.vibrate)navigator.vibrate(10)}
 function authBack(){if(aR.classList.contains('open'))aR.classList.remove('open');else aL.classList.remove('open')}
 function closeAuthAll(){aL.classList.remove('open');aR.classList.remove('open');document.querySelectorAll('.au input[type=password]').forEach(i=>{i.value='';i.type='password'});document.querySelectorAll('.eye i').forEach(i=>i.className='fa-solid fa-eye-slash')}
-function hideWelcome(){inApp=true;wl.classList.add('out');wlb.classList.remove('show');closeAuthAll()}
+function hideWelcome(){fixTop();[120,450,900].forEach(t=>setTimeout(fixTop,t));inApp=true;wl.classList.add('out');wlb.classList.remove('show');closeAuthAll()}
 function settle(){
   if(!authReady)return;
   if(curUser){if(hideT)return;hideT=setTimeout(()=>{hideT=0;hideWelcome()},Math.max(0,3000-(performance.now()-t0)))}
@@ -843,7 +851,6 @@ document.querySelectorAll('.au').forEach(a=>a.addEventListener('click',async e=>
     if(!EMR.test(em))return showErr(aL,'Escribe tu correo arriba y vuelve a tocar esta opción.');
     try{needFB();await GSA.reset(em);showErr(aL,'Te enviamos un correo para restablecer tu contraseña.',true)}catch(err){showErr(aL,errMsg(err))}}}));
 document.getElementById('wlin').addEventListener('click',()=>authOpen('login'));
-document.getElementById('wlh').addEventListener('click',()=>authOpen('login'));
 document.getElementById('wlreg').addEventListener('click',()=>authOpen('register'));
 addEventListener('keydown',e=>{if(e.key==='Escape'&&(aL.classList.contains('open')||aR.classList.contains('open')))authBack()});
 let cur=1;
@@ -866,11 +873,14 @@ function go(i){
 tabs.forEach((t,i)=>t.addEventListener('click',()=>go(i)));
 
 /* Web app: service worker, pantalla completa e instalación */
+try{history.scrollRestoration='manual'}catch(e){}
+function fixTop(){const a=document.activeElement;if(a&&a!==document.body&&a.blur)a.blur();scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}
+if(window.visualViewport){const vv=visualViewport,chk=()=>{const a=document.activeElement;if(a&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;if(vv.offsetTop>1)scrollTo(scrollX,scrollY)};vv.addEventListener('resize',chk);vv.addEventListener('scroll',chk)}
+addEventListener('pageshow',fixTop);
 const standalone=matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches||navigator.standalone===true;
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 /* Anti-zoom: bloquea pellizco y doble toque (iOS ignora user-scalable) */
 ['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
-document.addEventListener('touchmove',e=>{if(e.touches.length>1||(e.scale&&e.scale!==1))e.preventDefault()},{passive:false});
 document.addEventListener('dblclick',e=>e.preventDefault());
 let dp=null;const box=document.getElementById('install'),itxt=document.getElementById('itxt'),ibtn=document.getElementById('ibtn');
 const dismissed=()=>{try{return localStorage.getItem('gs-inst')==='1'}catch(e){return false}};
