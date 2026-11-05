@@ -86,6 +86,34 @@ h1{font-size:22px;font-weight:700;padding:0 10px 14px}
 .view.enter .soon>:not(.ic){animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
 .soon>h2{animation-delay:.1s!important}.soon>p{animation-delay:.18s!important}.soon>.chip{animation-delay:.26s!important}
 
+/* Biblioteca (pestaña Apps) */
+.lib{padding:0 8px}
+.seg{position:relative;display:inline-flex;gap:2px;margin:2px 0 20px}
+.seg button{position:relative;z-index:1;border:0;background:none;color:#b9aedd;font-size:17px;font-weight:600;padding:13px 20px;border-radius:999px;cursor:pointer;transition:color .3s}
+.seg button.on{color:#fff}
+.pill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:999px;background:linear-gradient(110deg,rgba(255,63,164,.22),rgba(139,92,255,.32) 55%,rgba(47,107,255,.26));border:1px solid rgba(190,150,255,.5);box-shadow:0 0 18px rgba(139,92,255,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:transform .45s cubic-bezier(.3,1.3,.5,1),width .45s cubic-bezier(.3,1.3,.5,1)}
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{position:relative;display:block;width:100%;aspect-ratio:1;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:pointer;background:#140b2c;box-shadow:0 0 0 1px rgba(190,150,255,.16),0 8px 20px rgba(0,0,0,.45);transition:transform .25s cubic-bezier(.3,1.5,.5,1),box-shadow .25s;animation:cin .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--n)*.06s)}
+.card:active{transform:scale(.95);box-shadow:0 0 0 1px rgba(190,150,255,.65),0 0 24px rgba(139,92,255,.55)}
+.card img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+@keyframes cin{from{opacity:0;transform:translateY(16px) scale(.92)}}
+.card .gt{position:absolute;inset:0;display:grid;place-items:center;padding:14px;text-align:center;font-weight:800;font-size:clamp(16px,5.2vw,22px);line-height:1.15;letter-spacing:.01em;text-shadow:0 2px 12px rgba(0,0,0,.55)}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 20% 0,rgba(255,255,255,.16),transparent 55%);pointer-events:none}
+.card.p1{background:linear-gradient(160deg,#6d7a63,#262d26)}
+.card.p2{background:linear-gradient(160deg,#7a2f2f,#0f1d24)}
+.card.p3{background:linear-gradient(160deg,#ff3fa4,#3a1d8f 60%,#150a3c)}
+.card.p4{background:linear-gradient(160deg,#2fd4ff,#6b3bd1 60%,#1a0f3a)}
+.card.p5{background:linear-gradient(160deg,#3fa9ff,#2f8f4a 80%)}
+.card.p6{background:linear-gradient(160deg,#ff9a2f,#2f6bff)}
+.card.wipe{background:linear-gradient(180deg,#f8f8fa 0,#eceef3 50%,#1b2542 100%)}
+.wp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding-top:26%}
+.wp b{font-size:clamp(26px,9vw,40px);font-style:italic;font-weight:800;letter-spacing:-1px;color:#e0132c;line-height:1}
+.wp small{margin-top:7px;font-size:9px;letter-spacing:.2em;font-weight:700;color:#59607a}
+.wp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:radial-gradient(ellipse at 65% 100%,rgba(74,168,255,.85),transparent 62%),linear-gradient(180deg,transparent,#0f1730)}
+.card.gold{background:radial-gradient(circle at 50% 68%,#fff3bd 0,#f6cf72 30%,#e2a54a 62%,#b9742b 100%)}
+.sun{position:absolute;left:50%;top:62%;width:70%;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,235,.95),rgba(255,240,170,0) 70%)}
+.dune{position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(180deg,#a8662a,#5e3414);clip-path:polygon(0 100%,0 72%,28% 58%,50% 18%,72% 58%,100% 74%,100% 100%)}
+
 /* Barra inferior */
 .nav{--i:1;--o:6;position:fixed;bottom:0;left:50%;width:min(100%,480px);height:calc(136px + env(safe-area-inset-bottom));z-index:30;transform:translateX(-50%) translateY(100%);animation:up .8s cubic-bezier(.2,.8,.2,1) .35s forwards;pointer-events:none}
 .nav>*{pointer-events:auto}
@@ -169,9 +197,38 @@ reveal();
 
 const tabs=[...document.querySelectorAll('.tab')],names=['Juegos','Novedades','Explorar','Apps','Buscar'];
 const nav=document.getElementById('nav'),lbl=document.getElementById('lbl'),views=document.getElementById('views');
-const info=[['fa-gamepad','Juegos','Muy pronto vas a encontrar aquí los mejores juegos para descargar.'],null,['fa-compass','Explorar','Descubre lanzamientos, categorías y recomendaciones.'],['fa-grip','Apps','Tus apps y herramientas favoritas en un solo lugar.'],['fa-magnifying-glass','Buscar','Encuentra cualquier juego en segundos.']];
+const info=[['fa-gamepad','Juegos','Muy pronto vas a encontrar aquí los mejores juegos para descargar.'],null,['fa-compass','Explorar','Descubre lanzamientos, categorías y recomendaciones.'],null,['fa-magnifying-glass','Buscar','Encuentra cualquier juego en segundos.']];
 const vs=[];vs[1]=document.getElementById('home');
 info.forEach((x,i)=>{if(!x)return;const v=document.createElement('section');v.className='view';v.hidden=true;v.innerHTML='<div class="soon"><div class="ic"><i class="fa-solid '+x[0]+'"></i></div><h2>'+x[1]+'</h2><p>'+x[2]+'</p><span class="chip">Próximamente</span></div>';views.append(v);vs[i]=v});
+/* Biblioteca (pestaña Apps) */
+const GAMES={
+ shadow:{n:'Shadow of the Colossus',c:'p1',t:'Shadow of the Colossus'},
+ uncharted:{n:'Uncharted: El Legado Perdido',c:'p2',t:'Uncharted'},
+ dreams:{n:'Dreams',c:'p3',t:'Dreams'},
+ genie:{n:'Concrete Genie',c:'p4',t:'Concrete Genie'},
+ horizon:{n:'Horizon Zero Dawn',c:'p5',t:'Horizon Zero Dawn'},
+ ratchet:{n:'Ratchet & Clank',c:'p6',t:'Ratchet & Clank'},
+ wipeout:{n:'wipEout Omega Collection',c:'wipe',h:'<div class="wp"><b>wipEout</b><small>OMEGA COLLECTION</small></div>'},
+ journey:{n:'Journey',c:'gold',h:'<div class="sun"></div><div class="dune"></div>'}
+};
+const LISTS={played:['horizon','uncharted','ratchet','genie','shadow','dreams'],bought:['shadow','uncharted','dreams','genie','horizon','ratchet','wipeout','journey']};
+const lv=document.createElement('section');lv.className='view';lv.hidden=true;
+lv.innerHTML='<div class="lib"><div class="seg" role="tablist"><i class="pill"></i><button role="tab" data-k="played">Jugados</button><button role="tab" data-k="bought">Comprados</button></div><div class="lgrid"></div></div>';
+views.append(lv);vs[3]=lv;
+let lk='bought',pin=false;
+const seg=lv.querySelector('.seg'),pill=seg.querySelector('.pill'),lgrid=lv.querySelector('.lgrid'),sbtn=[...seg.querySelectorAll('button')];
+function pillPos(){const b=sbtn.find(x=>x.dataset.k===lk);if(!b||!b.offsetWidth)return;
+  if(!pin){pin=true;pill.style.transition='none'}
+  pill.style.width=b.offsetWidth+'px';pill.style.transform='translateX('+b.offsetLeft+'px)';
+  if(pill.style.transition==='none'){void pill.offsetWidth;pill.style.transition=''}}
+function libShow(){
+  lgrid.innerHTML=LISTS[lk].map((k,n)=>{const g=GAMES[k];return '<button class="card '+(g.c||'')+'" style="--n:'+n+'" aria-label="'+g.n+'">'+(g.h||'<span class="gt">'+g.t+'</span>')+'</button>'}).join('');
+  sbtn.forEach(b=>{const on=b.dataset.k===lk;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
+  requestAnimationFrame(pillPos);
+}
+sbtn.forEach(b=>b.addEventListener('click',()=>{if(b.dataset.k===lk)return;lk=b.dataset.k;libShow();if(navigator.vibrate)navigator.vibrate(8)}));
+addEventListener('resize',pillPos);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(pillPos);
 let cur=1;
 function go(i){
   if(i===cur)return;
@@ -180,6 +237,7 @@ function go(i){
   nav.style.setProperty('--i',i);nav.style.setProperty('--o',[14,6,0,6,14][i]);
   lbl.textContent=names[i];lbl.classList.remove('pop');void lbl.offsetWidth;lbl.classList.add('pop');
   vs.forEach((v,j)=>{if(v)v.hidden=j!==i});
+  if(i===3)libShow();
   const v=vs[i];v.style.setProperty('--dir',dir);v.classList.remove('enter');void v.offsetWidth;v.classList.add('enter');
   if(i===1)reveal();
   scrollTo({top:0});
